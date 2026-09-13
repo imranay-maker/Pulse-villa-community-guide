@@ -35,6 +35,7 @@ a{color:var(--teal);text-decoration:none}
 .quick-tile{border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px 12px;text-align:left;display:flex;gap:10px;align-items:center;font-weight:750;color:var(--navy);min-height:68px;box-shadow:0 4px 14px rgba(31,55,77,.05)}
 .qicon{font-size:23px}
 .quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.quick-actions>:last-child{grid-column:1/-1}
 .action-card{border:0;border-radius:15px;padding:14px;background:var(--teal);color:#fff;text-align:left;font-weight:800}
 .action-card.alt{background:#fff;color:var(--navy);border:1px solid var(--line)}
 .selector{margin-top:14px}
@@ -63,8 +64,15 @@ a{color:var(--teal);text-decoration:none}
 .tipline{background:#fff;border-radius:13px;padding:11px 12px;margin:7px 0;font-size:13px;border:1px solid var(--line)}
 .mini-card{padding:13px}
 .section-intro{font-size:13px;color:#55636a}
-.provider-screen{display:none;padding:18px 14px 30px}
-.provider-screen.active{display:block}
+.provider-screen,.materials-screen{display:none;padding:18px 14px 30px}
+.provider-screen.active,.materials-screen.active{display:block}
+.material-group{margin:0 0 28px}
+.material-group:last-child{margin-bottom:0}
+.status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10.5px;font-weight:800;letter-spacing:.02em}
+.status-pill.ok{background:#e4f3ee;color:#1c7a53}
+.status-pill.warn{background:#fdf1dc;color:#93650f}
+.status-pill.off{background:#f5e9e9;color:#9b4a4a}
+.materials-intro{font-size:12.5px;color:#55636a;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin:0 0 18px}
 .provider-card{padding:14px}
 .provider-top{display:flex;justify-content:space-between;gap:12px}
 .provider-cat{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);font-weight:900}
@@ -77,9 +85,11 @@ a{color:var(--teal);text-decoration:none}
 .small-action.secondary{background:var(--soft);color:var(--teal)}
 .search-summary{display:none;padding:10px 14px 0;font-size:12px;color:var(--muted)}
 .search-summary.active{display:block}
+.app.is-searching .home{display:none}
+.app.is-searching #providerView,.app.is-searching #materialsView{display:block;padding-top:0}
 .no-results{display:none;margin:14px;background:#fff0f0;border:1px solid #edcccc;border-radius:14px;padding:14px;color:#7f3c3c;font-size:13px}
-.bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(680px,100%);z-index:60;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 7px calc(7px + var(--safe-bottom));display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -5px 20px rgba(31,55,77,.08)}
-.navbtn{border:0;background:transparent;padding:5px 2px;color:#687980;font-size:10px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px}
+.bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(680px,100%);z-index:60;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 5px calc(7px + var(--safe-bottom));display:grid;grid-template-columns:repeat(5,1fr);box-shadow:0 -5px 20px rgba(31,55,77,.08)}
+.navbtn{border:0;background:transparent;padding:5px 1px;color:#687980;font-size:9.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px}
 .navbtn .ico{font-size:20px}
 .navbtn.active{color:var(--teal)}
 .fab{position:fixed;right:max(16px,calc((100vw - 680px)/2 + 16px));bottom:calc(82px + var(--safe-bottom));width:48px;height:48px;border-radius:50%;border:0;background:var(--navy);color:white;font-size:22px;box-shadow:0 8px 20px rgba(31,55,77,.25);display:none;z-index:55}
@@ -96,7 +106,7 @@ a{color:var(--teal);text-decoration:none}
     <div class="brandline"><strong>Pulse Villas Community Guide</strong><span>Mobile edition</span></div>
     <label class="searchbox">
       <span class="glass">⌕</span>
-      <input id="search" type="search" placeholder="Search water, AC, permits, gardener…" autocomplete="off">
+      <input id="search" type="search" placeholder="Search water, AC, paint colour, gardener…" autocomplete="off">
       <button id="clearSearch" type="button" aria-label="Clear search">×</button>
     </label>
   </header>
@@ -155,6 +165,7 @@ a{color:var(--teal);text-decoration:none}
       <div class="quick-title">Quick actions</div>
       <div class="quick-actions">
         <button class="action-card" data-view="providers">🛠️ Recommended providers</button>
+        <button class="action-card" data-view="materials">🎨 Paint colours &amp; materials</button>
         <button class="action-card alt" data-go="open-unresolved-community-actions">⚠️ Open issues</button>
       </div>
 
@@ -167,7 +178,7 @@ a{color:var(--teal);text-decoration:none}
     </section>
 
     <div id="searchSummary" class="search-summary"></div>
-    <div id="noResults" class="no-results">No match found. Try a shorter search such as “pump”, “permit”, “AC” or “security”.</div>
+    <div id="noResults" class="no-results">No match found. Try a shorter search such as “pump”, “permit”, “AC”, “RAL 9010” or “security”.</div>
     <main class="content">
     <section class="screen-section" id="management-work-permits-security" data-title="1. Management, work permits &amp; security">
       <div class="section-title-row">
@@ -1548,12 +1559,1968 @@ a{color:var(--teal);text-decoration:none}
     
   </section>
 
+  <section id="materialsView" class="materials-screen">
+    <div class="section-title-row">
+      <div class="section-icon">🎨</div>
+      <div><h2>Paint colours &amp; materials</h2><div class="section-count">123 approved finishing items from the original build spec</div></div>
+    </div>
+    <p class="materials-intro">These are the developer-approved finishing specifications recorded during the original build (2022) for the standard Pulse Villas layout — paint RAL/NCS codes, tile codes, fittings and suppliers by room. Individual villas may differ if later renovated, and a few items below were cancelled, put on hold or resubmitted rather than installed — check the status on each card before assuming it was used.</p>
+  <div class="material-group" data-cat="sanitary-wares">
+    <div class="section-title-row">
+      <div class="section-icon">🚿</div>
+      <div><h2>Sanitary Wares</h2><div class="section-count">25 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="sanitary wares floor mounted water closet, with exposed cistern, white color master bathrooms, typical bathrooms &amp; powder rooms sw01 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Floor mounted Water Closet, with exposed cistern, White color</span>
+          <span class="issue-preview">Master bathrooms, Typical bathrooms &amp; Powder rooms · SW01</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master bathrooms, Typical bathrooms &amp; Powder rooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares under counter top basin white color master bathrooms, typical bathrooms &amp; powder rooms sw02 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Under Counter top Basin White color</span>
+          <span class="issue-preview">Master bathrooms, Typical bathrooms &amp; Powder rooms · SW02</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master bathrooms, Typical bathrooms &amp; Powder rooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW02</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares basin mixer maids bathrooms sw03 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Basin mixer</span>
+          <span class="issue-preview">Maids Bathrooms · SW03</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maids Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW03</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares basin mixer master bathrooms, typical bathrooms &amp; powder rooms sw03 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Basin mixer</span>
+          <span class="issue-preview">Master bathrooms, Typical bathrooms &amp; Powder rooms · SW03</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master bathrooms, Typical bathrooms &amp; Powder rooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW03</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares shower mixer master bathroom bathtub , typical bathroom with bathtub sw04 sara / tredex approved as noted approved for only bathtub and shower combination units and the maids room. all other stand alone showers (without tubs) or stand alone tubs (without showers) are to be revised and resubmitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shower Mixer</span>
+          <span class="issue-preview">Master Bathroom Bathtub , Typical Bathroom with Bathtub · SW04</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master Bathroom Bathtub , Typical Bathroom with Bathtub</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW04</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="note">Approved for only bathtub and shower combination units and the maids room. All other stand alone showers (without tubs) or stand alone tubs (without showers) are to be revised and resubmitted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares bidet spray set master bathrooms, typical bathrooms , maids bathrooms &amp; powder rooms sw05 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bidet Spray Set</span>
+          <span class="issue-preview">Master bathrooms, Typical bathrooms , Maids bathrooms &amp; Powder rooms · SW05</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master bathrooms, Typical bathrooms , Maids bathrooms &amp; Powder rooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW05</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares shower set all bathrooms sw06 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shower Set</span>
+          <span class="issue-preview">All Bathrooms · SW06</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW06</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares linear floor drain master bathrooms shower sw07 casa milano approved as noted approved grade 316">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Linear Floor Drain</span>
+          <span class="issue-preview">Master bathrooms shower · SW07</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master bathrooms shower</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW07</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Casa Milano</p></div>
+        <div class="note">Grade 316</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares paper holder all bathrooms sw08 sara / tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Paper Holder</span>
+          <span class="issue-preview">All Bathrooms · SW08</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW08</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Sara / Tredex</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares towel rail bathrooms - as per drawings sw09 on hold 1. not fully confirmed as 100% cancelled in all bathrooms and what was requested is that a study is carried out with the possible omission of some of these items. 2. final direction also needs to be reviewed commercially noted, we will keep this item on hold until the commercial study is completed awaiting a review of the bathroom layouts with all indicated accessories">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Towel Rail</span>
+          <span class="issue-preview">Bathrooms - As per drawings · SW09</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms - As per drawings</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW09</p></div>
+        <div class="note">1. Not fully confirmed as 100% cancelled in all bathrooms and what was requested is that a study is carried out with the possible omission of some of these items. 2. Final direction also needs to be reviewed commercially</div>
+        <div class="note">Noted, we will keep this item on hold until the commercial study is completed</div>
+        <div class="note">Awaiting a review of the bathroom layouts with all indicated accessories</div>
+        <div class="meta"><span class="status-pill warn">On hold</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares towel ring bathrooms - as per drawings on hold">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Towel Ring</span>
+          <span class="issue-preview">Bathrooms - As per drawings</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms - As per drawings</p></div>
+        <div class="meta"><span class="status-pill warn">On hold</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares rob hock bathrooms - as per drawings on hold">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Rob Hock</span>
+          <span class="issue-preview">Bathrooms - As per drawings</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms - As per drawings</p></div>
+        <div class="meta"><span class="status-pill warn">On hold</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares shower drain shower areas except master bathroom approved as noted approved grade 316">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shower Drain</span>
+          <span class="issue-preview">Shower areas except Master bathroom</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Shower areas except Master bathroom</p></div>
+        <div class="note">Grade 316</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares built in single lever shower mixer all shower areas sw19 approved as noted approved 1. physical sample to be provided 2. there is no cost impact on this item as it has already been confirmed with the contractor as being part of his sow">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Built in Single Lever Shower Mixer</span>
+          <span class="issue-preview">All Shower Areas · SW19</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Shower Areas</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW19</p></div>
+        <div class="note">1. Physical sample to be provided 2. There is no cost impact on this item as it has already been confirmed with the contractor as being part of his SOW</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares bathtub 1600x700 typical bathrooms sw33 casa milano approved as noted approved on the basis that both bathtub sizes 160x70cm &amp; 140x70cm shall be of the same supplier with same shape / finish / etc... size 170x70 is missing shall be supplied as per the approved sample approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathtub 1600x700</span>
+          <span class="issue-preview">Typical Bathrooms · SW33</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Typical Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW33</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Casa Milano</p></div>
+        <div class="note">Approved on the basis that both bathtub sizes 160x70cm &amp; 140x70cm shall be of the same supplier with same shape / finish / etc...</div>
+        <div class="note">Size 170x70 is missing shall be supplied as per the approved sample</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares bathtub 1400x700 typical bathrooms casa milano approved as noted required to match approved sample of item #15, otherwise item #15 will be rejected and both bathtubs are to be selected matching with the same vendor/ appearance and finish size 170x70 is missing shall be supplied as per the approved sample approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathtub 1400x700</span>
+          <span class="issue-preview">Typical Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Typical Bathrooms</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Casa Milano</p></div>
+        <div class="note">Required to match approved sample of Item #15, otherwise item #15 will be rejected and both bathtubs are to be selected matching with the same vendor/ appearance and finish</div>
+        <div class="note">Size 170x70 is missing shall be supplied as per the approved sample</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares semi pedestal washing basin with bottle trap maids bathrooms sw20 tredex not approved bigger sample to be provided (50 x 40 cm depth)">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Semi Pedestal Washing Basin With bottle trap</span>
+          <span class="issue-preview">Maids Bathrooms · SW20</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maids Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW20</p></div>
+        <div class="block"><span class="label">Supplier</span><p>TREDEX</p></div>
+        <div class="note">Bigger sample to be provided (50 x 40 cm depth)</div>
+        <div class="meta"><span class="status-pill off">Not approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares shower set maids bathrooms sw34 tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shower Set</span>
+          <span class="issue-preview">Maids Bathrooms · SW34</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maids Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW34</p></div>
+        <div class="block"><span class="label">Supplier</span><p>TREDEX</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares floor mounted water closet maids bathrooms sw35 tredex approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Floor mounted Water Closet</span>
+          <span class="issue-preview">Maids Bathrooms · SW35</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maids Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW35</p></div>
+        <div class="block"><span class="label">Supplier</span><p>TREDEX</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares sink single lever mixer kitchen sw13 casa milano approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Sink Single Lever Mixer</span>
+          <span class="issue-preview">Kitchen · SW13</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW13</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Casa Milano</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares sink kitchen sw14 casa milano approved option only to review ss double bowl with no tray. contingent on the commercial impact (if any) pertaining to the request. contractor to provide smaller ss double bowl sink with no tray approved sample on site given the statement that there is no cost impact for the change.">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Sink</span>
+          <span class="issue-preview">Kitchen · SW14</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>SW14</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Casa Milano</p></div>
+        <div class="note">Option only to review SS double bowl with no tray. Contingent on the commercial impact (if any) pertaining to the request.</div>
+        <div class="note">Contractor to provide smaller SS double bowl sink with no tray</div>
+        <div class="note">Approved sample on site given the statement that there is no cost impact for the change.</div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares floor drain cover kitchen &amp; bathrooms approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Floor Drain Cover</span>
+          <span class="issue-preview">Kitchen &amp; Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen &amp; Bathrooms</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares clean out cover kitchen &amp; bathrooms approved as noted clean out shall be with hidden screws">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Clean out Cover</span>
+          <span class="issue-preview">Kitchen &amp; Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen &amp; Bathrooms</p></div>
+        <div class="note">Clean Out shall be with hidden screws</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares rain water outlet cover external approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Rain Water Outlet Cover</span>
+          <span class="issue-preview">External</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>External</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="sanitary wares balcony floor drain balconies approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Balcony Floor Drain</span>
+          <span class="issue-preview">Balconies</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Balconies</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="tiles">
+    <div class="section-title-row">
+      <div class="section-icon">🧱</div>
+      <div><h2>Tiles</h2><div class="section-count">19 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="tiles general tiling 600x600 dry areas &amp; kitchen tl01 rak a06gzaln-lgy.m0r approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">General Tiling 600x600</span>
+          <span class="issue-preview">Dry areas &amp; kitchen · A06GZALN-LGY.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Dry areas &amp; kitchen</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A06GZALN-LGY.M0R — TL01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles general tile skirting 600x100 dry areas &amp; kitchen sk01 rak ask06gzaln-lgy.at approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">General Tile Skirting 600x100</span>
+          <span class="issue-preview">Dry areas &amp; kitchen · ASK06GZALN-LGY.AT</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Dry areas &amp; kitchen</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>ASK06GZALN-LGY.AT — SK01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles shower area 600*600 all bathrooms tl05 rak a06gzmle-gy0.m0r approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shower Area 600*600</span>
+          <span class="issue-preview">All Bathrooms · A06GZMLE-GY0.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A06GZMLE-GY0.M0R — TL05</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles threshold main door, maid room&amp; bathrooms st01 rak a18gloun-059.x0f approved as noted not approved for the shower up stands, where as color of the up stand is to match the tile color. approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Threshold</span>
+          <span class="issue-preview">Main Door, Maid room&amp; Bathrooms · A18GLOUN-059.X0F</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Main Door, Maid room&amp; Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A18GLOUN-059.X0F — ST01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Not approved for the shower up stands, where as color of the up stand is to match the tile color.</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles threshold shower up stand st01 rak re-submit color of up-stand to match the approved tile color">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Threshold</span>
+          <span class="issue-preview">Shower Up stand · ST01</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Shower Up stand</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>ST01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Color of up-stand to match the approved tile color</div>
+        <div class="meta"><span class="status-pill warn">Resubmitted / superseded</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles stairs 1200x300 staircases tl07 rak approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Stairs 1200x300</span>
+          <span class="issue-preview">Staircases · TL07</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Staircases</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>TL07</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles stairs 1200x300 out door rak approved as noted same color and texture of item no. 38 approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Stairs 1200x300</span>
+          <span class="issue-preview">Out door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Out door</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Same color and texture of item no. 38</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles bathroom floor 600x600 all bathrooms tl12 rak a06gzmle-gy0.m0r approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Floor 600x600</span>
+          <span class="issue-preview">All Bathrooms · A06GZMLE-GY0.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A06GZMLE-GY0.M0R — TL12</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles bathroom wall 600x300 all bathrooms tl22 rak a09gzmle-gy0.m0r approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Wall 600x300</span>
+          <span class="issue-preview">All Bathrooms · A09GZMLE-GY0.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A09GZMLE-GY0.M0R — TL22</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles bathroom skirting 600 x100 all bathrooms sk22 rak ask06gzmle-gy0.at approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Skirting 600 x100</span>
+          <span class="issue-preview">All Bathrooms · ASK06GZMLE-GY0.AT</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>ASK06GZMLE-GY0.AT — SK22</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles bathroom wall (accent tile) 600x300 all bathrooms tl04a tl04b rak a09gzsur-cgy.m0l approved as noted smooth finish tile approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Wall (Accent Tile) 600x300</span>
+          <span class="issue-preview">All Bathrooms · A09GZSUR-CGY.M0L</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A09GZSUR-CGY.M0L — TL04a TL04b</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Smooth finish tile</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles balcony flooring balcony rak a06galic-lig.a0x0r approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Balcony Flooring</span>
+          <span class="issue-preview">Balcony · A06GALIC-LIG.A0X0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Balcony</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A06GALIC-LIG.A0X0R</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles flooring 300x300 maid room &amp; bathroom tl02 rak a00gzsur-owh.m0r approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Flooring 300x300</span>
+          <span class="issue-preview">Maid Room &amp; Bathroom · A00GZSUR-OWH.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maid Room &amp; Bathroom</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A00GZSUR-OWH.M0R — TL02</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles wall tile 300x300 maid bathroom tl22* rak a00gzsur-owh.m0r approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall Tile 300x300</span>
+          <span class="issue-preview">Maid Bathroom · A00GZSUR-OWH.M0R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maid Bathroom</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A00GZSUR-OWH.M0R — TL22*</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles maid bathroom skirting maid bathroom sk02 rak ask00gzsur-owh.at approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Maid Bathroom skirting</span>
+          <span class="issue-preview">Maid Bathroom · ASK00GZSUR-OWH.AT</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Maid Bathroom</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>ASK00GZSUR-OWH.AT — SK02</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles kitchen back splash kitchen backsplash ff05 re-submit alternative kitchen backsplash materials to be reviewed rather then the first request of porcelain slabs . sub-way style porcelain tiles to be submitted for review. refer to reference image porcelain slab (same as the counter top) approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Kitchen Back Splash</span>
+          <span class="issue-preview">Kitchen Backsplash · FF05</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen Backsplash</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>FF05</p></div>
+        <div class="note">Alternative kitchen backsplash materials to be reviewed rather then the first request of porcelain slabs . Sub-way style porcelain tiles to be submitted for review. Refer to reference image</div>
+        <div class="note">Porcelain slab (same as the counter top) approved</div>
+        <div class="meta"><span class="status-pill warn">Resubmitted / superseded</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles counter top kitchen ff02 rak approved as noted surface is approved, sample for polished edge to be provided approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Counter Top</span>
+          <span class="issue-preview">Kitchen · FF02</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchen</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>FF02</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="note">Surface is approved, Sample for polished edge to be provided</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles vanity top bathrooms ff03 rak a18-ggpsl-500.x0f approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Vanity Top</span>
+          <span class="issue-preview">Bathrooms · A18-GGPSL-500.X0F</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>A18-GGPSL-500.X0F — FF03</p></div>
+        <div class="block"><span class="label">Supplier</span><p>RAK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="tiles tile trim all bathrooms bcr ltd.uk approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Tile Trim</span>
+          <span class="issue-preview">All Bathrooms · BCR Ltd.UK</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>BCR Ltd.UK</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="internal-paint">
+    <div class="section-title-row">
+      <div class="section-icon">🎨</div>
+      <div><h2>Internal Paint</h2><div class="section-count">7 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="internal paint walls (dry) all areas wf01 wellcoat ral 9010 approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Walls (Dry)</span>
+          <span class="issue-preview">All areas · RAL 9010</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All areas</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>RAL 9010 — WF01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Wellcoat</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint wall (wet) wet areas wf11 wellcoat ral 9010 approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall (Wet)</span>
+          <span class="issue-preview">Wet areas · RAL 9010</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Wet areas</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>RAL 9010 — WF11</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Wellcoat</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint ceiling (dry) all dry areas cf01 wellcoat ral 9016 approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ceiling (Dry)</span>
+          <span class="issue-preview">All dry areas · RAL 9016</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All dry areas</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>RAL 9016 — CF01</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Wellcoat</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint ceiling (wet) wet areas pt22 wellcoat ral 9016 approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ceiling (Wet)</span>
+          <span class="issue-preview">Wet areas · RAL 9016</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Wet areas</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>RAL 9016 — PT22</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Wellcoat</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint accent wall family room wf06 cancelled accepted - to be reviewed commercially">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Accent wall</span>
+          <span class="issue-preview">Family Room · WF06</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Family Room</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>WF06</p></div>
+        <div class="note">Accepted - to be reviewed commercially</div>
+        <div class="meta"><span class="status-pill off">Cancelled — not used</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint accent wall all bedrooms wf07 cancelled accepted - to be reviewed commercially">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Accent wall</span>
+          <span class="issue-preview">All Bedrooms · WF07</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bedrooms</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>WF07</p></div>
+        <div class="note">Accepted - to be reviewed commercially</div>
+        <div class="meta"><span class="status-pill off">Cancelled — not used</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="internal paint accent wall master bed room wf08 cancelled accepted - to be reviewed commercially">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Accent wall</span>
+          <span class="issue-preview">Master Bed room · WF08</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Master Bed room</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>WF08</p></div>
+        <div class="note">Accepted - to be reviewed commercially</div>
+        <div class="meta"><span class="status-pill off">Cancelled — not used</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="ironmongery">
+    <div class="section-title-row">
+      <div class="section-icon">🔩</div>
+      <div><h2>Ironmongery</h2><div class="section-count">14 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="ironmongery hinges all doors consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Hinges</span>
+          <span class="issue-preview">All Doors</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Doors</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery lever handle external door entrance door consort approved as noted solid handle for both sides approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Lever Handle external door</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="note">Solid Handle for both sides</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery lever handle internal doors consort approved as noted approved hollow handle">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Lever Handle</span>
+          <span class="issue-preview">Internal Doors</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Internal Doors</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="note">Hollow Handle</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery door viewer entrance door consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Door Viewer</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery door stopper all doors consort approved as noted approved in principle, but marked up plan to be reviewed for locations and type of door stop at each location">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Door Stopper</span>
+          <span class="issue-preview">All Doors</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Doors</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="note">Approved in principle, but marked up plan to be reviewed for locations and type of door stop at each location</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery lock cases all doors consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Lock cases</span>
+          <span class="issue-preview">All Doors</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Doors</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery cylinders entrance door consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Cylinders</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery concealed door closer entrance door cancelled accepted - to be reviewed commercially">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Concealed door closer</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="note">Accepted - to be reviewed commercially</div>
+        <div class="meta"><span class="status-pill off">Cancelled — not used</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery door guard entrance door cancelled accepted - to be reviewed commercially">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Door Guard</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="note">Accepted - to be reviewed commercially</div>
+        <div class="meta"><span class="status-pill off">Cancelled — not used</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery key &amp; turn cylinder bedrooms consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Key &amp; turn Cylinder</span>
+          <span class="issue-preview">Bedrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bedrooms</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery bathroom thumb turn bathrooms consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Thumb turn</span>
+          <span class="issue-preview">Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery roller latch laundry &amp; store consort approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Roller Latch</span>
+          <span class="issue-preview">Laundry &amp; Store</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Laundry &amp; Store</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Consort</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery batwing seal all doors not submitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Batwing Seal</span>
+          <span class="issue-preview">All Doors</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Doors</p></div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="ironmongery automatic door seal bottom entrance door not submitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Automatic Door Seal Bottom</span>
+          <span class="issue-preview">Entrance Door</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="joinery">
+    <div class="section-title-row">
+      <div class="section-icon">🚪</div>
+      <div><h2>Joinery</h2><div class="section-count">15 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="joinery kitchen lower cabinets carcass sharif white color melamine approved as noted approved with comments that all exposed surfaces/ faces shall be hpl approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed 1- exposed surface of carcase shall be same as the approved hpl material. 2- mock up to be resubmitted for final approval to include the selected hpl face as required">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Carcass</span>
+          <span class="issue-preview">White color melamine</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color melamine</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Approved with comments that all exposed surfaces/ faces shall be HPL approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed</div>
+        <div class="note">1- Exposed surface of Carcase shall be same as the approved HPL material. 2- Mock up to be resubmitted for final approval to include the selected HPL face as required</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery kitchen lower cabinets shutters sharif danoub 1025-sf approved as noted mock up shall be provided for final approval approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shutters</span>
+          <span class="issue-preview">Danoub 1025-SF</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>Danoub 1025-SF</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Mock Up Shall be provided for final approval</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery kitchen upper cabinets carcass sharif white color melamine approved as noted approved with comments that all exposed surfaces/ faces shall be hpl approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed 1- exposed surface of carcase shall be same as the approved hpl material. 2- mock up to be resubmitted for final approval to include the selected hpl face as required">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Carcass</span>
+          <span class="issue-preview">White color melamine</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color melamine</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Approved with comments that all exposed surfaces/ faces shall be HPL approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed</div>
+        <div class="note">1- Exposed surface of Carcase shall be same as the approved HPL material. 2- Mock up to be resubmitted for final approval to include the selected HPL face as required</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery kitchen upper cabinets shutters kitchens sharif ny-4259x approved as noted mock up shall be provided for final approval approved - vertical grain orientation">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shutters</span>
+          <span class="issue-preview">Kitchens · NY-4259X</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchens</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>NY-4259X</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Mock Up Shall be provided for final approval</div>
+        <div class="note">Approved - Vertical grain orientation</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery vanity cabinets carcass sharif white color melamine approved as noted approved with comments that all exposed surfaces/ faces shall be hpl approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed 1- exposed surface of carcase shall be same as the approved hpl material. 2- mock up to be resubmitted for final approval to include the selected hpl face as required">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Carcass</span>
+          <span class="issue-preview">White color melamine</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color melamine</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Approved with comments that all exposed surfaces/ faces shall be HPL approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed</div>
+        <div class="note">1- Exposed surface of Carcase shall be same as the approved HPL material. 2- Mock up to be resubmitted for final approval to include the selected HPL face as required</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery vanity cabinets shutters sharif ecolam / 760-sf approved as noted approved for material, but final detailing and quality of edging to be reviewed mock up shall be provided for final approval horizontal grain orientation contractor is to provide mock-up in the bench mark villas only and hold all other units at this time due to concerns on the grain orientation not being able to achieve horizontal">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shutters</span>
+          <span class="issue-preview">ECOLAM / 760-SF</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>ECOLAM / 760-SF</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Approved for material, but final detailing and quality of edging to be reviewed</div>
+        <div class="note">Mock Up Shall be provided for final approval</div>
+        <div class="note">Horizontal grain orientation</div>
+        <div class="note">Contractor is to provide mock-up in the bench mark villas only and hold all other units at this time due to concerns on the grain orientation not being able to achieve horizontal</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery wardrobes carcass sharif white color melamine approved as noted 1. approved with comments that all exposed surfaces/ faces shall be hpl approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed 2. all shelving to have adjustable options for locations (i.e. additional holes provided for varied shelf locations) 1- exposed surface of carcase shall be same as the approved hpl material. 2- mock up to be resubmitted for final approval to include the selected hpl face as required 3- all shelving to have adjustable options for locations (i.e. additional holes provided for varied shelf locations)">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Carcass</span>
+          <span class="issue-preview">White color melamine</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color melamine</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">1. Approved with comments that all exposed surfaces/ faces shall be HPL approved materials, where as the current sample/ mock-up is rejected due to the white faces being exposed 2. All shelving to have adjustable options for locations (i.e. additional holes provided for varied shelf locations)</div>
+        <div class="note">1- Exposed surface of Carcase shall be same as the approved HPL material. 2- Mock up to be resubmitted for final approval to include the selected HPL face as required 3- All shelving to have adjustable options for locations (i.e. additional holes provided for varied shelf locations)</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery wardrobes shutters sharif ecolam / 760-sf approved as noted approved for material, but final detailing and quality of edging to be reviewed mock up shall be provided for final approval horizontal grain orientation contractor is to provide mock-up in the bench mark villas only and hold all other units at this time due to concerns on the grain orientation not being able to achieve horizontal">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Shutters</span>
+          <span class="issue-preview">ECOLAM / 760-SF</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>ECOLAM / 760-SF</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="note">Approved for material, but final detailing and quality of edging to be reviewed</div>
+        <div class="note">Mock Up Shall be provided for final approval</div>
+        <div class="note">Horizontal grain orientation</div>
+        <div class="note">Contractor is to provide mock-up in the bench mark villas only and hold all other units at this time due to concerns on the grain orientation not being able to achieve horizontal</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery wardrobes wardrobe handle all wardrobes sharif approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wardrobe Handle</span>
+          <span class="issue-preview">All Wardrobes</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Wardrobes</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors external doors frame sharif approved as noted approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">External Doors Frame</span>
+          <span class="issue-preview">Joinery</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors external doors architraves sharif approved as noted approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">External Doors Architraves</span>
+          <span class="issue-preview">Joinery</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors external doors shutter sharif approved as noted approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">External Doors Shutter</span>
+          <span class="issue-preview">Joinery</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors internal doors frame sharif white color paint approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Internal Doors Frame</span>
+          <span class="issue-preview">White color paint</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color paint</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors internal doors architraves sharif white color paint approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Internal Doors Architraves</span>
+          <span class="issue-preview">White color paint</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>White color paint</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="joinery doors internal doors leaf sharif danoub-1002-sf approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Internal Doors Leaf</span>
+          <span class="issue-preview">Danoub-1002-SF</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>Danoub-1002-SF</p></div>
+        <div class="block"><span class="label">Supplier</span><p>SHARIF</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="external-finishes">
+    <div class="section-title-row">
+      <div class="section-icon">🏡</div>
+      <div><h2>External Finishes</h2><div class="section-count">7 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="external finishes balcony handrail balcony 10 shelfco approved as noted color to be ral 7043 (matt finish) approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Balcony Handrail</span>
+          <span class="issue-preview">Balcony · 10</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Balcony</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>10</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Shelfco</p></div>
+        <div class="note">Color to be RAL 7043 (Matt Finish)</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes galvanized steel cat ladder elevations approved as noted 1- to be color code s2002-y (matt finish) 2- sample not provided 3- lock shall be provided for the sliding part approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Galvanized Steel Cat Ladder</span>
+          <span class="issue-preview">Elevations</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Elevations</p></div>
+        <div class="note">1- To be Color code S2002-Y (Matt Finish) 2- Sample not provided 3- Lock shall be provided for the Sliding Part</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes metal fence/garden gates color to be ral 7043 (matt finish) approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Metal Fence/Garden Gates</span>
+          <span class="issue-preview">External Finishes</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="note">Color to be RAL 7043 (matt Finish)</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill warn">Status not recorded</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes aluminium louver pump room 9 not submitted color to be ral 7037">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Aluminium Louver</span>
+          <span class="issue-preview">Pump Room · 9</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Pump Room</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>9</p></div>
+        <div class="note">Color to be RAL 7037</div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes parking shade structural parking area 6 al zayed shades approved as noted color to be ral 8028 (matt finish) approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Parking Shade structural</span>
+          <span class="issue-preview">Parking area · 6</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Parking area</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>6</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Al ZAYED SHADES</p></div>
+        <div class="note">Color to be RAL 8028 (Matt Finish)</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes parking shade fabric parking area polyfab approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Parking Shade Fabric</span>
+          <span class="issue-preview">Parking area</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Parking area</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Polyfab</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external finishes paver landscape not submitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Paver</span>
+          <span class="issue-preview">Landscape</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Landscape</p></div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="external-paint">
+    <div class="section-title-row">
+      <div class="section-icon">🖌️</div>
+      <div><h2>External Paint</h2><div class="section-count">3 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="external paint paint 01/ medium text elevations 1 jotun light grey ncs s-2002-y approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Paint 01/ Medium text</span>
+          <span class="issue-preview">Elevations · Light Grey NCS S-2002-Y</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Elevations</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Light Grey NCS S-2002-Y — 1</p></div>
+        <div class="block"><span class="label">Supplier</span><p>JOTUN</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external paint paint 02/ medium text elevations 2 jotun dark grey ncs s-7000-n approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Paint 02/ Medium text</span>
+          <span class="issue-preview">Elevations · Dark Grey NCS S-7000-N</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Elevations</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Dark Grey NCS S-7000-N — 2</p></div>
+        <div class="block"><span class="label">Supplier</span><p>JOTUN</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="external paint paint 03/ texture approved elevations 3 jotun ncs s 5010-y50r approved approved but as horizontal orientation of the texture">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Paint 03/ Texture Approved</span>
+          <span class="issue-preview">Elevations · NCS S 5010-Y50R</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Elevations</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>NCS S 5010-Y50R — 3</p></div>
+        <div class="block"><span class="label">Supplier</span><p>JOTUN</p></div>
+        <div class="note">Approved but as horizontal orientation of the texture</div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="glass">
+    <div class="section-title-row">
+      <div class="section-icon">🪟</div>
+      <div><h2>Glass</h2><div class="section-count">2 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="glass glass sand blasted bathrooms windows not submitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Glass Sand Blasted</span>
+          <span class="issue-preview">Bathrooms Windows</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bathrooms Windows</p></div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="glass glass vision panel all other windows and doors 5 emirates glass nn-35 t clear approved as noted approved color is approved, subject to the approval on the glass material submittal">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Glass Vision Panel</span>
+          <span class="issue-preview">All Other windows and Doors · NN-35 T CLEAR</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Other windows and Doors</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>NN-35 T CLEAR — 5</p></div>
+        <div class="block"><span class="label">Supplier</span><p>EMIRATES GLASS</p></div>
+        <div class="note">Color is Approved, subject to the approval on the Glass material submittal</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="upvc-ironmongery-accessories">
+    <div class="section-title-row">
+      <div class="section-icon">🔧</div>
+      <div><h2>UPVC Ironmongery &amp; accessories</h2><div class="section-count">6 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories hinges al mimari approved as noted approved same ral 7037 of frame">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Hinges</span>
+          <span class="issue-preview">UPVC Ironmongery &amp; accessories</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="note">Same RAL 7037 of frame</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories sliding door handle al mimari pzds004 approved as noted not approved contractor to provide lock devise no exposed screws same ral 7037 of frame approved however if comments are addressed with no exposed screws and same ral color as the frame color to match upvc color ral7037 approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Sliding Door Handle</span>
+          <span class="issue-preview">PZDS004</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>PZDS004</p></div>
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="note">Not approved</div>
+        <div class="note">Contractor to provide lock devise No exposed screws Same RAL 7037 of frame</div>
+        <div class="note">Approved however if comments are addressed with no exposed screws and same RAL color as the frame</div>
+        <div class="note">Color to match UPVC color RAL7037</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories hinged door handle al mimari approved as noted approved same ral 7037 of frame">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Hinged Door Handle</span>
+          <span class="issue-preview">UPVC Ironmongery &amp; accessories</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="note">Same RAL 7037 of frame</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories fly mesh al mimari approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Fly mesh</span>
+          <span class="issue-preview">UPVC Ironmongery &amp; accessories</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories upvc al mimari ral 7037 grey approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">UPVC</span>
+          <span class="issue-preview">RAL 7037 Grey</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block solution"><span class="label">Colour / product code</span><p>RAL 7037 Grey</p></div>
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="upvc ironmongery &amp; accessories tilted window handle al mimari approved as noted contractor to provide same shape and finish of hinged door handle color to match upvc color ral7037 approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Tilted window handle</span>
+          <span class="issue-preview">UPVC Ironmongery &amp; accessories</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>AL MIMARI</p></div>
+        <div class="note">Contractor to provide same shape and finish of hinged door handle</div>
+        <div class="note">Color to match UPVC color RAL7037</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="light-fixtures">
+    <div class="section-title-row">
+      <div class="section-icon">💡</div>
+      <div><h2>Light Fixtures</h2><div class="section-count">10 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="light fixtures down light entrance hall,corridor,rooms entrance, stair case, laundry, dining area larsa jiso-spain-51015-2953-90-4000k approved as noted approved at 4000k wattage subject to lux calculation">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Down Light</span>
+          <span class="issue-preview">Entrance Hall,Corridor,rooms entrance, stair case, Laundry, dining area · JISO-Spain-51015-2953-90-4000K</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Hall,Corridor,rooms entrance, stair case, Laundry, dining area</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>JISO-Spain-51015-2953-90-4000K</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved at 4000k</div>
+        <div class="note">wattage subject to lux calculation</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures surface mounted light staircase larsa 26324-2984-90 approved contractor to provide another options original sample to be resubmitted for final consideration approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Surface mounted light</span>
+          <span class="issue-preview">Staircase · 26324-2984-90</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Staircase</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>26324-2984-90</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Contractor to provide another options</div>
+        <div class="note">Original sample to be resubmitted for final consideration</div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures spot light dressing rooms, toilet wash basin, kitchen entrances larsa jiso-spain-51010-2953-90-4000k approved approved at 4000k">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Spot light</span>
+          <span class="issue-preview">Dressing rooms, Toilet wash basin, kitchen entrances · JISO-Spain-51010-2953-90-4000K</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Dressing rooms, Toilet wash basin, kitchen entrances</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>JISO-Spain-51010-2953-90-4000K</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved at 4000k</div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures wall mounted up-down light outside balcony and terrace larsa onelight-cyprus-67426a/b,dark gray approved as noted approved approved color is dark grey">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall mounted up-down light</span>
+          <span class="issue-preview">outside Balcony and Terrace · Onelight-Cyprus-67426A/B,dark gray</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>outside Balcony and Terrace</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Onelight-Cyprus-67426A/B,dark gray</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved color is Dark grey</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures surface mounted light store larsa jiso-spain-26314-2984-90-4000k approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Surface mounted light</span>
+          <span class="issue-preview">Store · JISO-Spain-26314-2984-90-4000K</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Store</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>JISO-Spain-26314-2984-90-4000K</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures surface mounted light roof larsa lighttec-germany-l030032-4000k approved as noted approved approved color is dark grey">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Surface mounted light</span>
+          <span class="issue-preview">Roof · Lighttec-Germany-L030032-4000K</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Roof</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Lighttec-Germany-L030032-4000K</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved color is Dark grey</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures wall/ceiling mounted light parking-pump room larsa lighttec-germany-l030030-4000k approved as noted approved approved color is dark grey">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall/Ceiling mounted Light</span>
+          <span class="issue-preview">Parking-Pump room · Lighttec-Germany-L030030-4000K</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Parking-Pump room</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Lighttec-Germany-L030030-4000K</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved color is Dark grey</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures wall mounted light entrance door larsa onelight-cyprus-67386c/an/w approved as noted approved approved color is dark grey">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall mounted Light</span>
+          <span class="issue-preview">Entrance Door · Onelight-Cyprus-67386C/AN/W</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Onelight-Cyprus-67386C/AN/W</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Approved color is Dark grey</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures ceiling recessed light entrance door/parking larsa onelight-cyprus- 10113b/w/c approved not approved. if this is an external light at the ceiling it should be in dark grey color same as all other exterior fixtures required color is dark grey sample of the dark grey color to be submitted and reviewed approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ceiling recessed light</span>
+          <span class="issue-preview">Entrance Door/Parking · Onelight-Cyprus- 10113B/W/C</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance Door/Parking</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>Onelight-Cyprus- 10113B/W/C</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="note">Not approved. If this is an external light at the ceiling it should be in dark grey color same as all other exterior fixtures</div>
+        <div class="note">Required color is Dark grey</div>
+        <div class="note">sample of the dark grey color to be submitted and reviewed</div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="light fixtures ceiling rose with hook bedroom, living room, maid room, study room larsa ls-e27 approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ceiling rose with hook</span>
+          <span class="issue-preview">Bedroom, Living room, Maid room, study room · LS-E27</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bedroom, Living room, Maid room, study room</p></div>
+        <div class="block solution"><span class="label">Colour / product code</span><p>LS-E27</p></div>
+        <div class="block"><span class="label">Supplier</span><p>LARSA</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="wiring-acc">
+    <div class="section-title-row">
+      <div class="section-icon">🔌</div>
+      <div><h2>Wiring Acc</h2><div class="section-count">5 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="wiring acc normal socket all areas legrand approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Normal Socket</span>
+          <span class="issue-preview">All areas</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All areas</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Legrand</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="wiring acc switches all areas legrand approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Switches</span>
+          <span class="issue-preview">All areas</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All areas</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Legrand</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="wiring acc door bill switch legrand approved as noted approved contractor to provide protection for outdoor use">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Door Bill Switch</span>
+          <span class="issue-preview">Wiring Acc</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Supplier</span><p>Legrand</p></div>
+        <div class="note">Contractor to provide protection for outdoor use</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="wiring acc door bill chain entrance lobby legrand approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Door Bill Chain</span>
+          <span class="issue-preview">Entrance lobby</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Entrance lobby</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Legrand</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="wiring acc water proof socket external legrand approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Water proof Socket</span>
+          <span class="issue-preview">External</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>External</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Legrand</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="hvac-outlets">
+    <div class="section-title-row">
+      <div class="section-icon">🌬️</div>
+      <div><h2>HVAC Outlets</h2><div class="section-count">4 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="hvac outlets ceiling air outlets kitchens, corridors &amp; fc areas approved as noted approved color to match the ceiling paint">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ceiling Air Outlets</span>
+          <span class="issue-preview">Kitchens, Corridors &amp; FC areas</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Kitchens, Corridors &amp; FC areas</p></div>
+        <div class="note">Color to match the ceiling paint</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="hvac outlets wall air outlets bedrooms &amp; living approved as noted approved color to match the adjacent wall paint">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wall Air Outlets</span>
+          <span class="issue-preview">Bedrooms &amp; Living</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Bedrooms &amp; Living</p></div>
+        <div class="note">Color to match the adjacent wall paint</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="hvac outlets kitchen exhaust diffuser all kitchens approved as noted approved color to match the ceiling paint">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Kitchen Exhaust Diffuser</span>
+          <span class="issue-preview">All Kitchens</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Kitchens</p></div>
+        <div class="note">Color to match the ceiling paint</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="hvac outlets bathroom exhaust diffuser all bathrooms approved as noted approved color to match the ceiling paint">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Bathroom Exhaust Diffuser</span>
+          <span class="issue-preview">All Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="note">Color to match the ceiling paint</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="gas-detector">
+    <div class="section-title-row">
+      <div class="section-icon">🚨</div>
+      <div><h2>Gas Detector</h2><div class="section-count">1 item</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="gas detector gas detector all kitchens not submitted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Gas detector</span>
+          <span class="issue-preview">All Kitchens</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Kitchens</p></div>
+        <div class="meta"><span class="status-pill off">Never submitted</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="thermostat">
+    <div class="section-title-row">
+      <div class="section-icon">🌡️</div>
+      <div><h2>Thermostat</h2><div class="section-count">1 item</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="thermostat all areas midea approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Unnamed item</span>
+          <span class="issue-preview">All areas</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All areas</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Midea</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="glass-partitions">
+    <div class="section-title-row">
+      <div class="section-icon">🔲</div>
+      <div><h2>Glass Partitions</h2><div class="section-count">1 item</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="glass partitions glass partition showers areas al sabi approved approved">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Glass Partition</span>
+          <span class="issue-preview">Showers areas</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Showers areas</p></div>
+        <div class="block"><span class="label">Supplier</span><p>AL SABI</p></div>
+        <div class="meta"><span class="status-pill ok">Approved</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="mirrors">
+    <div class="section-title-row">
+      <div class="section-icon">🪞</div>
+      <div><h2>Mirrors</h2><div class="section-count">1 item</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="mirrors mirrors all bathrooms al sabi approved as noted edges to be straight with 1mm chamfer approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Mirrors</span>
+          <span class="issue-preview">All Bathrooms</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>All Bathrooms</p></div>
+        <div class="block"><span class="label">Supplier</span><p>AL SABI</p></div>
+        <div class="note">Edges to be straight with 1mm chamfer</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill ok">Approved (with notes)</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="material-group" data-cat="staircase-handrail">
+    <div class="section-title-row">
+      <div class="section-icon">🪜</div>
+      <div><h2>Staircase Handrail</h2><div class="section-count">2 items</div></div>
+    </div>
+    <article class="issue-card material-card" data-search="staircase handrail staircase handrail : wall mounted staircase shelfco 1- color to be ral 9010 2- copping color to match external door color approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Staircase Handrail : Wall mounted</span>
+          <span class="issue-preview">Staircase</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Staircase</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Shelfco</p></div>
+        <div class="note">1- Color to be RAL 9010 2- Copping Color to Match External Door Color</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill warn">Status not recorded</span></div>
+      </div>
+    </article>
+    <article class="issue-card material-card" data-search="staircase handrail staircase handrail: floor mounted staircase shelfco color to be ral 9010 approved as noted">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Staircase Handrail: Floor Mounted</span>
+          <span class="issue-preview">Staircase</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Location</span><p>Staircase</p></div>
+        <div class="block"><span class="label">Supplier</span><p>Shelfco</p></div>
+        <div class="note">Color to be RAL 9010</div>
+        <div class="note">Approved as noted</div>
+        <div class="meta"><span class="status-pill warn">Status not recorded</span></div>
+      </div>
+    </article>
+  </div>
+  </section>
+
   <button class="fab" id="toTop" aria-label="Back to top">↑</button>
 
   <nav class="bottomnav">
     <button class="navbtn active" data-view="home"><span class="ico">⌂</span><span>Home</span></button>
     <button class="navbtn" data-view="issues"><span class="ico">☰</span><span>Issues</span></button>
     <button class="navbtn" data-view="providers"><span class="ico">🛠️</span><span>Providers</span></button>
+    <button class="navbtn" data-view="materials"><span class="ico">🎨</span><span>Finishes</span></button>
     <button class="navbtn" data-view="search"><span class="ico">⌕</span><span>Search</span></button>
   </nav>
 </div>
@@ -1561,11 +3528,14 @@ a{color:var(--teal);text-decoration:none}
 <script>
 const search=document.getElementById('search');
 const clear=document.getElementById('clearSearch');
-const issueCards=[...document.querySelectorAll('.issue-card')];
+const issueCards=[...document.querySelectorAll('.issue-card:not(.material-card)')];
+const materialCards=[...document.querySelectorAll('.material-card')];
 const providerCards=[...document.querySelectorAll('.provider-card')];
 const sections=[...document.querySelectorAll('.screen-section')];
+const materialGroups=[...document.querySelectorAll('.material-group')];
 const homeView=document.getElementById('homeView');
 const providerView=document.getElementById('providerView');
+const materialsView=document.getElementById('materialsView');
 const navBtns=[...document.querySelectorAll('.navbtn')];
 const searchSummary=document.getElementById('searchSummary');
 const noResults=document.getElementById('noResults');
@@ -1575,13 +3545,15 @@ function norm(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim()}
 function setActive(v){navBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===v))}
 
 function showView(v){
-  if(v==='providers'){
+  if(v==='providers'||v==='materials'){
     homeView.style.display='none';
-    providerView.classList.add('active');
-    setActive('providers');
+    providerView.classList.toggle('active',v==='providers');
+    materialsView.classList.toggle('active',v==='materials');
+    setActive(v);
     window.scrollTo(0,0);
   } else {
     providerView.classList.remove('active');
+    materialsView.classList.remove('active');
     homeView.style.display='block';
     setActive(v==='search'?'search':v==='issues'?'issues':'home');
     if(v==='issues') document.querySelector('.content')?.scrollIntoView({behavior:'smooth'});
@@ -1608,10 +3580,18 @@ document.addEventListener('click',e=>{
   if(view){showView(view.dataset.view);return;}
 });
 
+let wasSearching=false;
 function applySearch(){
   const q=norm(search.value);
   clear.style.display=q?'block':'none';
-  let issues=0, providers=0;
+  let issues=0, providers=0, materials=0;
+
+  const isSearching=!!q;
+  document.querySelector('.app').classList.toggle('is-searching',isSearching);
+  if(isSearching&&!wasSearching){
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  wasSearching=isSearching;
 
   issueCards.forEach(c=>{
     const ok=!q||norm(c.dataset.search+' '+c.innerText).includes(q);
@@ -1633,10 +3613,22 @@ function applySearch(){
     if(ok)providers++;
   });
 
+  materialCards.forEach(c=>{
+    const ok=!q||norm(c.dataset.search+' '+c.innerText).includes(q);
+    c.style.display=ok?'':'none';
+    c.classList.toggle('match',!!q&&ok);
+    if(ok){materials++; if(q)c.classList.add('open')}
+  });
+
+  materialGroups.forEach(g=>{
+    const visible=[...g.querySelectorAll('.material-card')].some(c=>c.style.display!=='none');
+    g.style.display=(!q||visible)?'':'none';
+  });
+
   if(q){
     searchSummary.classList.add('active');
-    searchSummary.textContent=`${issues} issue match${issues===1?'':'es'} • ${providers} provider match${providers===1?'':'es'}`;
-    noResults.style.display=(issues===0&&providers===0)?'block':'none';
+    searchSummary.textContent=`${issues} issue match${issues===1?'':'es'} • ${providers} provider match${providers===1?'':'es'} • ${materials} material match${materials===1?'':'es'}`;
+    noResults.style.display=(issues===0&&providers===0&&materials===0)?'block':'none';
   } else {
     searchSummary.classList.remove('active');
     noResults.style.display='none';
