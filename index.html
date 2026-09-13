@@ -1,0 +1,1654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f374d">
+<title>Pulse Villas Community Guide — Mobile</title>
+<style>
+:root {
+  --navy:#1f374d; --teal:#1b7479; --bg:#f4f7f8; --card:#fff;
+  --ink:#1f2b31; --muted:#718087; --line:#dde6e8; --soft:#eaf4f5;
+  --safe-bottom:env(safe-area-inset-bottom,0px); --safe-top:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:#dfe6e8;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;line-height:1.45}
+button,input,select{font:inherit}
+a{color:var(--teal);text-decoration:none}
+.app{max-width:680px;margin:0 auto;min-height:100vh;background:var(--bg);padding-bottom:calc(82px + var(--safe-bottom));box-shadow:0 0 30px rgba(31,55,77,.12)}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(31,55,77,.98);padding:calc(10px + var(--safe-top)) 14px 12px;color:white;box-shadow:0 2px 14px rgba(0,0,0,.12)}
+.brandline{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.brandline strong{font-size:16px}
+.brandline span{font-size:11px;color:#b8cbd2}
+.searchbox{display:flex;align-items:center;background:white;border-radius:14px;padding:0 12px;box-shadow:0 3px 12px rgba(0,0,0,.1)}
+.searchbox .glass{font-size:18px;margin-right:8px;color:#64737a}
+#search{border:0;outline:0;width:100%;padding:13px 0;background:transparent;font-size:15px}
+#clearSearch{border:0;background:transparent;color:#77868c;font-size:20px;padding:6px;display:none}
+.home{padding:18px 14px 6px}
+.hero{background:linear-gradient(145deg,var(--navy),#2c596d 72%,var(--teal));color:#fff;border-radius:22px;padding:20px;box-shadow:0 10px 28px rgba(31,55,77,.18)}
+.hero .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#a7d6d8;font-weight:800}
+.hero h1{font-size:27px;line-height:1.05;margin:7px 0 10px}
+.hero p{font-size:13.5px;color:#d7e5e9;margin:0}
+.quick-title{font-size:13px;font-weight:800;color:var(--navy);margin:21px 3px 10px}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.quick-tile{border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px 12px;text-align:left;display:flex;gap:10px;align-items:center;font-weight:750;color:var(--navy);min-height:68px;box-shadow:0 4px 14px rgba(31,55,77,.05)}
+.qicon{font-size:23px}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.action-card{border:0;border-radius:15px;padding:14px;background:var(--teal);color:#fff;text-align:left;font-weight:800}
+.action-card.alt{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.selector{margin-top:14px}
+.selector select{width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;color:var(--ink)}
+.content{padding:8px 14px 30px}
+.screen-section{scroll-margin-top:115px;margin:24px 0 34px}
+.section-title-row{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.section-icon{width:42px;height:42px;border-radius:13px;background:var(--soft);display:grid;place-items:center;font-size:22px;flex:0 0 auto}
+.section-title-row h2{font-size:20px;line-height:1.1;margin:0;color:var(--navy)}
+.section-count{font-size:11px;color:var(--muted);margin-top:3px}
+.issue-card,.provider-card,.mini-card{background:#fff;border:1px solid var(--line);border-radius:16px;margin:9px 0;overflow:hidden;box-shadow:0 4px 14px rgba(31,55,77,.045)}
+.issue-card.match,.provider-card.match{border-color:#79b5b8;box-shadow:0 0 0 3px rgba(27,116,121,.08)}
+.issue-head{width:100%;border:0;background:#fff;display:flex;justify-content:space-between;gap:12px;text-align:left;padding:15px 14px;align-items:center;color:inherit}
+.issue-name{display:block;font-size:15px;font-weight:800;color:var(--navy)}
+.issue-preview{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.chev{font-size:26px;color:var(--teal);transform:rotate(90deg);transition:.2s}
+.issue-card.open .chev{transform:rotate(-90deg)}
+.issue-body{display:none;border-top:1px solid var(--line);padding:4px 14px 15px}
+.issue-card.open .issue-body{display:block}
+.block{padding:11px 0 2px}
+.block.solution{background:linear-gradient(90deg,var(--soft),transparent);margin:8px -7px;padding:11px 7px;border-radius:10px}
+.label{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;color:var(--teal)}
+.block p{margin:4px 0 6px;font-size:13.5px}
+.note{background:#fff7dc;border-left:4px solid #d1a62e;border-radius:7px;padding:10px 11px;margin:9px 0;font-size:12.5px}
+.meta{border-top:1px dashed var(--line);padding-top:9px;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.tipline{background:#fff;border-radius:13px;padding:11px 12px;margin:7px 0;font-size:13px;border:1px solid var(--line)}
+.mini-card{padding:13px}
+.section-intro{font-size:13px;color:#55636a}
+.provider-screen{display:none;padding:18px 14px 30px}
+.provider-screen.active{display:block}
+.provider-card{padding:14px}
+.provider-top{display:flex;justify-content:space-between;gap:12px}
+.provider-cat{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);font-weight:900}
+.provider-card h3{margin:3px 0 2px;font-size:17px;color:var(--navy)}
+.provider-icon{font-size:23px}
+.contact{font-size:13px;font-weight:700;margin:7px 0}
+.provider-card p{font-size:12.5px;color:#55636a;margin:6px 0 10px}
+.provider-actions{display:flex;gap:8px;flex-wrap:wrap}
+.small-action{display:inline-flex;align-items:center;justify-content:center;padding:9px 13px;border-radius:11px;background:var(--teal);color:white;font-size:12px;font-weight:800}
+.small-action.secondary{background:var(--soft);color:var(--teal)}
+.search-summary{display:none;padding:10px 14px 0;font-size:12px;color:var(--muted)}
+.search-summary.active{display:block}
+.no-results{display:none;margin:14px;background:#fff0f0;border:1px solid #edcccc;border-radius:14px;padding:14px;color:#7f3c3c;font-size:13px}
+.bottomnav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(680px,100%);z-index:60;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:7px 7px calc(7px + var(--safe-bottom));display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -5px 20px rgba(31,55,77,.08)}
+.navbtn{border:0;background:transparent;padding:5px 2px;color:#687980;font-size:10px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:2px}
+.navbtn .ico{font-size:20px}
+.navbtn.active{color:var(--teal)}
+.fab{position:fixed;right:max(16px,calc((100vw - 680px)/2 + 16px));bottom:calc(82px + var(--safe-bottom));width:48px;height:48px;border-radius:50%;border:0;background:var(--navy);color:white;font-size:22px;box-shadow:0 8px 20px rgba(31,55,77,.25);display:none;z-index:55}
+@media (max-width:420px){
+  .hero h1{font-size:24px}
+  .quick-tile{font-size:12.5px}
+  .section-title-row h2{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brandline"><strong>Pulse Villas Community Guide</strong><span>Mobile edition</span></div>
+    <label class="searchbox">
+      <span class="glass">⌕</span>
+      <input id="search" type="search" placeholder="Search water, AC, permits, gardener…" autocomplete="off">
+      <button id="clearSearch" type="button" aria-label="Clear search">×</button>
+    </label>
+  </header>
+
+  <div id="homeView">
+    <section class="home">
+      <div class="hero">
+        <div class="eyebrow">Community help in your pocket</div>
+        <h1>Find the answer fast.</h1>
+        <p>Issues, fixes, useful contacts and resident recommendations from the Pulse Villas community.</p>
+      </div>
+
+      <div class="quick-title">Popular help</div>
+      <div class="quick-grid">
+        <button class="quick-tile" data-go="management-work-permits-security">
+          <span class="qicon">🛡️</span>
+          <span>Management, work permits &amp; security</span>
+        </button>
+        
+        <button class="quick-tile" data-go="water-supply-pumps-pressure">
+          <span class="qicon">💧</span>
+          <span>Water supply, pumps &amp; pressure</span>
+        </button>
+        
+        <button class="quick-tile" data-go="air-conditioning-hvac">
+          <span class="qicon">❄️</span>
+          <span>Air conditioning &amp; HVAC</span>
+        </button>
+        
+        <button class="quick-tile" data-go="drains-smells-environmental-odour">
+          <span class="qicon">🌬️</span>
+          <span>Drains, smells &amp; environmental odour</span>
+        </button>
+        
+        <button class="quick-tile" data-go="noise-soundproofing">
+          <span class="qicon">🔇</span>
+          <span>Noise &amp; soundproofing</span>
+        </button>
+        
+        <button class="quick-tile" data-go="internet-mobile-signal">
+          <span class="qicon">📶</span>
+          <span>Internet &amp; mobile signal</span>
+        </button>
+        
+        <button class="quick-tile" data-go="pests-pets-animal-related-issues">
+          <span class="qicon">🐾</span>
+          <span>Pests, pets &amp; animal-related issues</span>
+        </button>
+        
+        <button class="quick-tile" data-go="facilities-parks-gym-pool-splash-park">
+          <span class="qicon">🏊</span>
+          <span>Facilities, parks, gym, pool &amp; splash park</span>
+        </button>
+        </div>
+
+      <div class="quick-title">Quick actions</div>
+      <div class="quick-actions">
+        <button class="action-card" data-view="providers">🛠️ Recommended providers</button>
+        <button class="action-card alt" data-go="open-unresolved-community-actions">⚠️ Open issues</button>
+      </div>
+
+      <div class="selector">
+        <select id="jumpSelect">
+          <option value="">Jump to any section…</option>
+          <option value="management-work-permits-security">1. Management, work permits &amp; security</option><option value="water-supply-pumps-pressure">2. Water supply, pumps &amp; pressure</option><option value="air-conditioning-hvac">3. Air conditioning &amp; HVAC</option><option value="drains-smells-environmental-odour">4. Drains, smells &amp; environmental odour</option><option value="noise-soundproofing">5. Noise &amp; soundproofing</option><option value="internet-mobile-signal">6. Internet &amp; mobile signal</option><option value="electricity-gas">7. Electricity &amp; gas</option><option value="pests-pets-animal-related-issues">8. Pests, pets &amp; animal-related issues</option><option value="roads-parking-scooters-community-safety">9. Roads, parking, scooters &amp; community safety</option><option value="facilities-parks-gym-pool-splash-park">10. Facilities, parks, gym, pool &amp; splash park</option><option value="community-budget-events-service-charge-ideas">11. Community budget, events &amp; service-charge ideas</option><option value="deliveries-lost-property-neighbour-to-neighbour-help">12. Deliveries, lost property &amp; neighbour-to-neighbour help</option><option value="useful-local-tips-quick-answers">13. Useful local tips &amp; quick answers</option><option value="open-unresolved-community-actions">15. Open / unresolved community actions</option>
+        </select>
+      </div>
+    </section>
+
+    <div id="searchSummary" class="search-summary"></div>
+    <div id="noResults" class="no-results">No match found. Try a shorter search such as “pump”, “permit”, “AC” or “security”.</div>
+    <main class="content">
+    <section class="screen-section" id="management-work-permits-security" data-title="1. Management, work permits &amp; security">
+      <div class="section-title-row">
+        <div class="section-icon">🛡️</div>
+        <div><h2>1. Management, work permits &amp; security</h2><div class="section-count">7 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="inconsistent contractor access / late-night deliveries residents reported approved contractors being refused access during normal hours while a large furniture delivery and installation was apparently allowed at around 1 a.m. residents suggested asking security for an explanation, escalating repeated inconsistencies to dubai south community management (dscm), and keeping evidence such as permit approvals and security responses. one escalation suggestion was dubai land department if management would not assist.  recurring issue; escalation route suggested, no final policy clarification recorded work permit, security, contractor access, late delivery, dscm, dld" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Inconsistent contractor access / late-night deliveries</span>
+          <span class="issue-preview">Residents reported approved contractors being refused access during normal hours while a large furniture delivery and install…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported approved contractors being refused access during normal hours while a large furniture delivery and installation was apparently allowed at around 1 a.m.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Residents suggested asking security for an explanation, escalating repeated inconsistencies to Dubai South Community Management (DSCM), and keeping evidence such as permit approvals and security responses. One escalation suggestion was Dubai Land Department if management would not assist.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Recurring issue; escalation route suggested, no final policy clarification recorded</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="how to escalate a work-permit complaint residents asked who within dubai south / dscm has authority to resolve permit problems. suggested route: dubai south administration / dscm first; if unresolved, escalate formally. the community email shared in the chat was thepulsevillas@dscm.ae. residents also recommended documenting the application, rejection reason and contractor paperwork.  practical escalation path shared by residents work permit, complaint, dubai south, dscm" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">How to escalate a work-permit complaint</span>
+          <span class="issue-preview">Residents asked who within Dubai South / DSCM has authority to resolve permit problems.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked who within Dubai South / DSCM has authority to resolve permit problems.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested route: Dubai South administration / DSCM first; if unresolved, escalate formally. The community email shared in the chat was thepulsevillas@dscm.ae. Residents also recommended documenting the application, rejection reason and contractor paperwork.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Practical escalation path shared by residents</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="ds app registration / work-permit access some residents found their unit registration disappeared or the ds app asked them to register again before permits could be raised. one resident advised that tenants may need to renew the app registration after annual ejari renewal. for otp/app failures, residents were directed back to dubai south / maintenance contacts.  resident advice / experience ds app, ejari, otp, unit registration, work permit" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">DS App registration / work-permit access</span>
+          <span class="issue-preview">Some residents found their unit registration disappeared or the DS App asked them to register again before permits could be r…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Some residents found their unit registration disappeared or the DS App asked them to register again before permits could be raised.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>One resident advised that tenants may need to renew the app registration after annual Ejari renewal. For OTP/app failures, residents were directed back to Dubai South / maintenance contacts.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="third-party liability insurance / aed 2,000 cheque a resident said a contractor permit kept being declined because the provider lacked third-party liability insurance or an undated aed 2,000 cheque. advice shared: if the provider has the required liability insurance, a cheque may not be needed; if not, the resident can provide the undated cheque and retrieve it after the work is completed.  resident-reported workaround; verify current policy before relying on it insurance, aed 2000 cheque, permit, contractor" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Third-party liability insurance / AED 2,000 cheque</span>
+          <span class="issue-preview">A resident said a contractor permit kept being declined because the provider lacked third-party liability insurance or an und…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident said a contractor permit kept being declined because the provider lacked third-party liability insurance or an undated AED 2,000 cheque.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Advice shared: if the provider has the required liability insurance, a cheque may not be needed; if not, the resident can provide the undated cheque and retrieve it after the work is completed.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident-reported workaround; verify current policy before relying on it</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="justlife / urban company and permits residents repeatedly asked whether app-booked cleaners, ac cleaners or handymen need a work permit. the chat contains conflicting experience: some light visits entered without a permit, while others said a permit was still needed but was approved quickly. another useful point: justlife may assign different third parties per task, so the final contractor documents/trade licence may only become available after team assignment. treat permit requirements as job-specific and confirm before the team arrives; security has denied entry where a permit was missing. resident advice / experience justlife, urban company, permit, trade licence" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Justlife / Urban Company and permits</span>
+          <span class="issue-preview">Residents repeatedly asked whether app-booked cleaners, AC cleaners or handymen need a work permit.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents repeatedly asked whether app-booked cleaners, AC cleaners or handymen need a work permit.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The chat contains conflicting experience: some light visits entered without a permit, while others said a permit was still needed but was approved quickly. Another useful point: Justlife may assign different third parties per task, so the final contractor documents/trade licence may only become available after team assignment.</p></div>
+        <div class="note"><strong>Note:</strong> Treat permit requirements as job-specific and confirm before the team arrives; security has denied entry where a permit was missing.</div>
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="security response to nuisance / antisocial behaviour residents reported repeated doorbell ringing, scooters/bikes in roads, children entering private garages and a lack of timely security response. suggested approach: report to security; provide villa numbers if known; request cctv review; have an incident report logged and sent to dscm; and ask management to contact parents / issue formal notices. the owners committee said it could escalate on residents&#x27; behalf.  incident-report/cctv escalation was actively used security, cctv, children, scooters, doorbells, dscm" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Security response to nuisance / antisocial behaviour</span>
+          <span class="issue-preview">Residents reported repeated doorbell ringing, scooters/bikes in roads, children entering private garages and a lack of timely…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported repeated doorbell ringing, scooters/bikes in roads, children entering private garages and a lack of timely security response.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested approach: report to security; provide villa numbers if known; request CCTV review; have an incident report logged and sent to DSCM; and ask management to contact parents / issue formal notices. The owners committee said it could escalate on residents&#x27; behalf.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Incident-report/CCTV escalation was actively used</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="side gates and community access control residents questioned whether side access points were helping security and whether non-residents were entering too easily. a proposal raised was to close unnecessary side gates and funnel non-resident access through the main gate, potentially using controlled/electric barriers. this was discussed as a committee proposal, not a confirmed implementation.  proposal / management decision required gates, access control, main gate, security" data-section="management-work-permits-security">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Side gates and community access control</span>
+          <span class="issue-preview">Residents questioned whether side access points were helping security and whether non-residents were entering too easily.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents questioned whether side access points were helping security and whether non-residents were entering too easily.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>A proposal raised was to close unnecessary side gates and funnel non-resident access through the main gate, potentially using controlled/electric barriers. This was discussed as a committee proposal, not a confirmed implementation.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Proposal / management decision required</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="water-supply-pumps-pressure" data-title="2. Water supply, pumps &amp; pressure">
+      <div class="section-title-row">
+        <div class="section-icon">💧</div>
+        <div><h2>2. Water supply, pumps &amp; pressure</h2><div class="section-count">7 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="no water after move-in / dewa activation new residents reported dewa being active but no water reaching the villa. residents suggested checking the water tap/valve under the villa-number board, then checking the pump room for a closed valve or switched-off pump.  resident advice / experience no water, dewa, valve, pump switch" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">No water after move-in / DEWA activation</span>
+          <span class="issue-preview">New residents reported DEWA being active but no water reaching the villa.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>New residents reported DEWA being active but no water reaching the villa.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Residents suggested checking the water tap/valve under the villa-number board, then checking the pump room for a closed valve or switched-off pump.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="water pressure fluctuates a recurring community complaint is pressure rising and dropping, sometimes returning only briefly after maintenance visits. first-line suggestion: ask duserve to check / refill air pressure in the pump system. several residents said the original blue expansion tank is a common weak point. replacing the blue expansion tank alone reportedly solved fluctuations in some villas.  common resident-tested fix water pressure, blue tank, expansion tank, duserve" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Water pressure fluctuates</span>
+          <span class="issue-preview">A recurring community complaint is pressure rising and dropping, sometimes returning only briefly after maintenance visits.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A recurring community complaint is pressure rising and dropping, sometimes returning only briefly after maintenance visits.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>First-line suggestion: ask Duserve to check / refill air pressure in the pump system. Several residents said the original blue expansion tank is a common weak point. Replacing the blue expansion tank alone reportedly solved fluctuations in some villas.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Common resident-tested fix</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="pump runs continuously / very high pressure residents reported the pump running non-stop and pressure staying high. immediate advice was to switch the pump off to avoid damage, accepting that water supply may stop until it is switched back on. then call duserve / a pump technician. one case resulted in a recommendation to replace the blue tank and one pump.  resident advice / experience pump running, high pressure, switch off pump" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Pump runs continuously / very high pressure</span>
+          <span class="issue-preview">Residents reported the pump running non-stop and pressure staying high.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported the pump running non-stop and pressure staying high.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Immediate advice was to switch the pump off to avoid damage, accepting that water supply may stop until it is switched back on. Then call Duserve / a pump technician. One case resulted in a recommendation to replace the blue tank and one pump.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="replacing original pumps some residents had repeated pump failures or complete water cut-off and asked whether replacing the pumps is worthwhile. reported options included buying replacement pumps directly and having duserve install them. one 2026 example: two dab jetinox 132 m pumps were around aed 750 each + vat, with duserve installation around aed 315–400. another resident reported a &#x27;silent&#x27; replacement around aed 800. these are historical resident prices, not quotes. resident advice / experience dab, jetinox, pump replacement, price" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Replacing original pumps</span>
+          <span class="issue-preview">Some residents had repeated pump failures or complete water cut-off and asked whether replacing the pumps is worthwhile.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Some residents had repeated pump failures or complete water cut-off and asked whether replacing the pumps is worthwhile.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Reported options included buying replacement pumps directly and having Duserve install them. One 2026 example: two DAB Jetinox 132 M pumps were around AED 750 each + VAT, with Duserve installation around AED 315–400. Another resident reported a &#x27;silent&#x27; replacement around AED 800.</p></div>
+        <div class="note"><strong>Note:</strong> These are historical resident prices, not quotes.</div>
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="upgrading to a quieter constant-pressure system residents wanted a longer-term alternative to the original system that needs air top-ups, is noisy and gives variable pressure. a resident-described upgrade used one active and one backup pump with no blue air cylinder, producing stronger, more consistent pressure and much less noise. reported installed prices varied widely (roughly aed 1,500–6,000 depending on specification/provider); one transguard-based quote was about aed 4,500. a normal work permit describing &#x27;pump replacement&#x27; was reported as sufficient.  strong positive resident feedback; specification varies by supplier pump upgrade, constant pressure, quiet pump, transguard" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Upgrading to a quieter constant-pressure system</span>
+          <span class="issue-preview">Residents wanted a longer-term alternative to the original system that needs air top-ups, is noisy and gives variable pressur…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents wanted a longer-term alternative to the original system that needs air top-ups, is noisy and gives variable pressure.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>A resident-described upgrade used one active and one backup pump with no blue air cylinder, producing stronger, more consistent pressure and much less noise. Reported installed prices varied widely (roughly AED 1,500–6,000 depending on specification/provider); one Transguard-based quote was about AED 4,500. A normal work permit describing &#x27;pump replacement&#x27; was reported as sufficient.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Strong positive resident feedback; specification varies by supplier</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="high water usage when nobody is home residents saw unexplained dewa consumption / apparent overflow. suggested check: inspect the tank float valve even if overflow is not visible, because an overflow pipe can discharge directly to sewage. a damaged float valve was reported as the cause in at least one villa.  resident advice / experience high water bill, float valve, overflow, dewa consumption" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">High water usage when nobody is home</span>
+          <span class="issue-preview">Residents saw unexplained DEWA consumption / apparent overflow.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents saw unexplained DEWA consumption / apparent overflow.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested check: inspect the tank float valve even if overflow is not visible, because an overflow pipe can discharge directly to sewage. A damaged float valve was reported as the cause in at least one villa.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="water leak in parking / tank area residents posted water leaking around the parking/tank area. the float mechanism was suggested as a likely cause; duserve was repeatedly recommended for inspection.  resident advice / experience water leak, parking, tank, floater" data-section="water-supply-pumps-pressure">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Water leak in parking / tank area</span>
+          <span class="issue-preview">Residents posted water leaking around the parking/tank area.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents posted water leaking around the parking/tank area.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The float mechanism was suggested as a likely cause; Duserve was repeatedly recommended for inspection.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="air-conditioning-hvac" data-title="3. Air conditioning &amp; HVAC">
+      <div class="section-title-row">
+        <div class="section-icon">❄️</div>
+        <div><h2>3. Air conditioning &amp; HVAC</h2><div class="section-count">6 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="house alternates between too cold and too stuffy a resident found 25°c too cold when the ac was on, but uncomfortable when it was off. suggested setting: eco mode around 24–25°c, or normal mode with the lowest fan speed. the resident offering the tip said this improved the problem substantially, though not completely.  resident advice / experience ac temperature, eco mode, fan speed" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">House alternates between too cold and too stuffy</span>
+          <span class="issue-preview">A resident found 25°C too cold when the AC was on, but uncomfortable when it was off.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident found 25°C too cold when the AC was on, but uncomfortable when it was off.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested setting: Eco mode around 24–25°C, or normal mode with the lowest fan speed. The resident offering the tip said this improved the problem substantially, though not completely.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="weak cooling / humid air / dusty smell after cleaning residents reported a unit still cooling poorly and smelling dusty even after coil cleaning. duct cleaning was suggested as the next diagnostic step. residents also recommended getting an hvac technician to check the system rather than repeatedly cleaning the same components.  resident advice / experience weak cooling, humidity, dust smell, duct cleaning" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Weak cooling / humid air / dusty smell after cleaning</span>
+          <span class="issue-preview">Residents reported a unit still cooling poorly and smelling dusty even after coil cleaning.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported a unit still cooling poorly and smelling dusty even after coil cleaning.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Duct cleaning was suggested as the next diagnostic step. Residents also recommended getting an HVAC technician to check the system rather than repeatedly cleaning the same components.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="ac display blank / unit will not switch on residents reported bedroom ac controls going blank despite resetting breakers and roof equipment. suggestions included checking/replacing a small fuse and contacting duserve/maintenance. a local parts shop was later shared for a low-cost replacement part in a similar &#x27;panel works but no air/fan&#x27; fault.  resident advice / experience ac blank, fuse, thermostat, no fan" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">AC display blank / unit will not switch on</span>
+          <span class="issue-preview">Residents reported bedroom AC controls going blank despite resetting breakers and roof equipment.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported bedroom AC controls going blank despite resetting breakers and roof equipment.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included checking/replacing a small fuse and contacting Duserve/maintenance. A local parts shop was later shared for a low-cost replacement part in a similar &#x27;panel works but no air/fan&#x27; fault.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="blower motor fault a resident asked what to do when cleaning companies said the blower motor needed replacement. advice was to have duserve or an hvac technician assess whether the motor can be serviced rather than automatically accepting a full replacement.  resident advice / experience blower motor, hvac, duserve" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Blower motor fault</span>
+          <span class="issue-preview">A resident asked what to do when cleaning companies said the blower motor needed replacement.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident asked what to do when cleaning companies said the blower motor needed replacement.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Advice was to have Duserve or an HVAC technician assess whether the motor can be serviced rather than automatically accepting a full replacement.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="ac duct-cleaning prices and scope residents saw very wide pricing and asked what a proper duct clean should include. reported examples ranged from about aed 250 per unit to aed 2,299 for a five-unit package that included filters, ducts, blowers, drain trays, outdoor units and re-gassing. one resident specifically advised agreeing the scope and price upfront and checking that mechanical brush cleaning and approved disinfectant are included. prices and scope are resident reports and should be re-quoted. resident advice / experience duct cleaning, ac cleaning, price, disinfectant" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">AC duct-cleaning prices and scope</span>
+          <span class="issue-preview">Residents saw very wide pricing and asked what a proper duct clean should include.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents saw very wide pricing and asked what a proper duct clean should include.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Reported examples ranged from about AED 250 per unit to AED 2,299 for a five-unit package that included filters, ducts, blowers, drain trays, outdoor units and re-gassing. One resident specifically advised agreeing the scope and price upfront and checking that mechanical brush cleaning and approved disinfectant are included.</p></div>
+        <div class="note"><strong>Note:</strong> Prices and scope are resident reports and should be re-quoted.</div>
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="smart thermostat / google nest / ecobee installation residents asked who could install smart thermostats correctly. a recommended installer contact was shared (bilal – just care / google thermostat). residents said the installer could handle multiple thermostat brands including ecobee.  resident advice / experience nest, ecobee, thermostat, installer" data-section="air-conditioning-hvac">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Smart thermostat / Google Nest / Ecobee installation</span>
+          <span class="issue-preview">Residents asked who could install smart thermostats correctly.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked who could install smart thermostats correctly.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>A recommended installer contact was shared (Bilal – Just Care / Google Thermostat). Residents said the installer could handle multiple thermostat brands including Ecobee.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="drains-smells-environmental-odour" data-title="4. Drains, smells &amp; environmental odour">
+      <div class="section-title-row">
+        <div class="section-icon">🌬️</div>
+        <div><h2>4. Drains, smells &amp; environmental odour</h2><div class="section-count">4 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="recurring foul smell outside the community residents repeatedly reported a strong sewage / chemical-like odour, especially at night and in the early morning. suggestions included coordinated complaints to dubai south, dubai municipality and the relevant sewage-treatment/environmental authorities. residents said previous bulk complaints had reduced the problem. in september, residents specifically urged calls to dubai municipality on 800 900; the chat then reported environmental monitoring equipment being deployed.  major recurring issue; official environmental attention reported in september 2026 foul smell, sewage, stench, dubai municipality, 800900" data-section="drains-smells-environmental-odour">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Recurring foul smell outside the community</span>
+          <span class="issue-preview">Residents repeatedly reported a strong sewage / chemical-like odour, especially at night and in the early morning.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents repeatedly reported a strong sewage / chemical-like odour, especially at night and in the early morning.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included coordinated complaints to Dubai South, Dubai Municipality and the relevant sewage-treatment/environmental authorities. Residents said previous bulk complaints had reduced the problem. In September, residents specifically urged calls to Dubai Municipality on <a href="tel:800900">800 900</a>; the chat then reported environmental monitoring equipment being deployed.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Major recurring issue; official environmental attention reported in September 2026</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="what is causing the outdoor smell? residents debated whether the source was the nearby sewage treatment plant, treated sewage irrigation water or something within the community. no single cause was verified in the chat. the guide therefore records these as resident hypotheses only. the practical consensus was to log official complaints and measurements rather than rely on speculation.  cause not established in the source chat stp, irrigation water, odour source" data-section="drains-smells-environmental-odour">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">What is causing the outdoor smell?</span>
+          <span class="issue-preview">Residents debated whether the source was the nearby sewage treatment plant, treated sewage irrigation water or something with…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents debated whether the source was the nearby sewage treatment plant, treated sewage irrigation water or something within the community.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>No single cause was verified in the chat. The guide therefore records these as resident hypotheses only. The practical consensus was to log official complaints and measurements rather than rely on speculation.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Cause not established in the source chat</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="drain smell in kitchen / maid&#x27;s room a resident reported a smell clearly coming from indoor drains rather than outside, despite repeated duserve visits. a resident with the same problem said an infrequently used maid&#x27;s-room toilet was allowing odour to return; flushing it roughly weekly prevented recurrence. this is a simple first check before bringing in an external plumber.  resident advice / experience drain smell, maid toilet, kitchen smell, flush" data-section="drains-smells-environmental-odour">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Drain smell in kitchen / maid&#x27;s room</span>
+          <span class="issue-preview">A resident reported a smell clearly coming from indoor drains rather than outside, despite repeated Duserve visits.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident reported a smell clearly coming from indoor drains rather than outside, despite repeated Duserve visits.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>A resident with the same problem said an infrequently used maid&#x27;s-room toilet was allowing odour to return; flushing it roughly weekly prevented recurrence. This is a simple first check before bringing in an external plumber.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="kitchen extraction fan a resident asked where the extraction-fan switch is located. the answer shared was: in the kitchen.  resident advice / experience extractor, fan switch, kitchen" data-section="drains-smells-environmental-odour">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Kitchen extraction fan</span>
+          <span class="issue-preview">A resident asked where the extraction-fan switch is located.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident asked where the extraction-fan switch is located.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The answer shared was: in the kitchen.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="noise-soundproofing" data-title="5. Noise &amp; soundproofing">
+      <div class="section-title-row">
+        <div class="section-icon">🔇</div>
+        <div><h2>5. Noise &amp; soundproofing</h2><div class="section-count">4 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="noise transmitted between adjoining villas residents described hearing footsteps, doors and neighbouring activity through the shared structure. a resident said a gap + stud wall filled with rock wool and two overlapping/taped gypsum-board layers materially helped in the master bedroom and living/dining area. the staircase remained a weak point. a quote for a stairwell solution using mass-loaded vinyl and a false wall was around aed 16,000.  resident advice / experience soundproofing, stud wall, rock wool, gypsum, stairwell" data-section="noise-soundproofing">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Noise transmitted between adjoining villas</span>
+          <span class="issue-preview">Residents described hearing footsteps, doors and neighbouring activity through the shared structure.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents described hearing footsteps, doors and neighbouring activity through the shared structure.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>A resident said a gap + stud wall filled with rock wool and two overlapping/taped gypsum-board layers materially helped in the master bedroom and living/dining area. The staircase remained a weak point. A quote for a stairwell solution using mass-loaded vinyl and a false wall was around AED 16,000.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="decorative acoustic panels vs transmitted neighbour noise residents asked whether wall-mounted acoustic panels would solve sound coming through from next door. the chat cautioned that products aimed at reverberation/echo may improve the room acoustics for the neighbour-facing wall but may not stop structure-borne/transmitted sound. two contractors reportedly told one resident not to spend money on this approach for that problem.  resident advice / experience acoustic panels, mute, echo, neighbour noise" data-section="noise-soundproofing">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Decorative acoustic panels vs transmitted neighbour noise</span>
+          <span class="issue-preview">Residents asked whether wall-mounted acoustic panels would solve sound coming through from next door.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked whether wall-mounted acoustic panels would solve sound coming through from next door.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The chat cautioned that products aimed at reverberation/echo may improve the room acoustics for the neighbour-facing wall but may not stop structure-borne/transmitted sound. Two contractors reportedly told one resident not to spend money on this approach for that problem.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="road noise through doors/windows residents said road noise appeared to be entering through poor-quality frames and glazing. contractors reportedly recommended replacing the frame and using soundproof glass, with matching exterior colour. residents said the modification had been rejected by dubai south because it changes the exterior. the community may need a coordinated approval route if pursuing this.  technical option identified; external modification approval unresolved road noise, soundproof glass, window frame, approval" data-section="noise-soundproofing">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Road noise through doors/windows</span>
+          <span class="issue-preview">Residents said road noise appeared to be entering through poor-quality frames and glazing.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents said road noise appeared to be entering through poor-quality frames and glazing.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Contractors reportedly recommended replacing the frame and using soundproof glass, with matching exterior colour. Residents said the modification had been rejected by Dubai South because it changes the exterior. The community may need a coordinated approval route if pursuing this.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Technical option identified; external modification approval unresolved</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="deciboard / staircase solution a resident proposed deciboard as a possible staircase solution. it was shared as a product worth sourcing locally, but no completed installation / outcome was recorded in the chat.  idea only / not validated in the source deciboard, stairs, soundproofing" data-section="noise-soundproofing">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Deciboard / staircase solution</span>
+          <span class="issue-preview">A resident proposed Deciboard as a possible staircase solution.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident proposed Deciboard as a possible staircase solution.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>It was shared as a product worth sourcing locally, but no completed installation / outcome was recorded in the chat.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Idea only / not validated in the source</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="internet-mobile-signal" data-title="6. Internet &amp; mobile signal">
+      <div class="section-title-row">
+        <div class="section-icon">📶</div>
+        <div><h2>6. Internet &amp; mobile signal</h2><div class="section-count">2 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="weak mobile signal / dropped calls etisalat/e&amp;, du and virgin users reported weak signal in parts of the community, particularly some phase 1 homes. residents believed wider network coverage / a nearby cell site was needed. the repeated suggestion was for affected users to raise individual complaints with their operator and for management to support a coverage request. in september, residents proposed a coordinated bulk complaint to etisalat/e&amp;.  recurring unresolved issue signal, etisalat, e&amp;, du, virgin, call drops, cell tower" data-section="internet-mobile-signal">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Weak mobile signal / dropped calls</span>
+          <span class="issue-preview">Etisalat/e&amp;, du and Virgin users reported weak signal in parts of the community, particularly some Phase 1 homes.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Etisalat/e&amp;, du and Virgin users reported weak signal in parts of the community, particularly some Phase 1 homes.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Residents believed wider network coverage / a nearby cell site was needed. The repeated suggestion was for affected users to raise individual complaints with their operator and for management to support a coverage request. In September, residents proposed a coordinated bulk complaint to Etisalat/e&amp;.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Recurring unresolved issue</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="intermittent slow home internet residents periodically reported slow or unstable internet on both e&amp; and du. no permanent technical fix emerged in the chat. the practical response was to compare whether neighbours were affected and log faults with the isp, especially when multiple homes had the same issue.  resident advice / experience internet, slow, e&amp;, du, connectivity" data-section="internet-mobile-signal">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Intermittent slow home internet</span>
+          <span class="issue-preview">Residents periodically reported slow or unstable internet on both e&amp; and du.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents periodically reported slow or unstable internet on both e&amp; and du.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>No permanent technical fix emerged in the chat. The practical response was to compare whether neighbours were affected and log faults with the ISP, especially when multiple homes had the same issue.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="electricity-gas" data-title="7. Electricity &amp; gas">
+      <div class="section-title-row">
+        <div class="section-icon">⚡</div>
+        <div><h2>7. Electricity &amp; gas</h2><div class="section-count">3 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="villa power off even after resetting breakers a resident said power went off at the breakers and would not restore. residents suggested contacting duserve and, for an electricity failure, dewa technical/emergency support on 991.  resident advice / experience electricity, breaker, dewa, 991, power failure" data-section="electricity-gas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Villa power off even after resetting breakers</span>
+          <span class="issue-preview">A resident said power went off at the breakers and would not restore.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident said power went off at the breakers and would not restore.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Residents suggested contacting Duserve and, for an electricity failure, DEWA technical/emergency support on <a href="tel:991">991</a>.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="washing machine trips the breaker a resident asked how to resolve a washing machine tripping the breaker. the chat treated this as an appliance/electrical fault needing technical inspection rather than a community-wide issue.  resident advice / experience washing machine, breaker, trip" data-section="electricity-gas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Washing machine trips the breaker</span>
+          <span class="issue-preview">A resident asked how to resolve a washing machine tripping the breaker.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A resident asked how to resolve a washing machine tripping the breaker.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The chat treated this as an appliance/electrical fault needing technical inspection rather than a community-wide issue.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="missing / delayed gas bills residents asked whether january–february gas bills had been issued and later checked whether gas supply was available. no substantive solution was recorded beyond neighbour confirmation. treat missing bills as a billing-provider query rather than assuming no charge is due.  resident advice / experience gas bill, gas supply" data-section="electricity-gas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Missing / delayed gas bills</span>
+          <span class="issue-preview">Residents asked whether January–February gas bills had been issued and later checked whether gas supply was available.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked whether January–February gas bills had been issued and later checked whether gas supply was available.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>No substantive solution was recorded beyond neighbour confirmation. Treat missing bills as a billing-provider query rather than assuming no charge is due.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="pests-pets-animal-related-issues" data-title="8. Pests, pets &amp; animal-related issues">
+      <div class="section-title-row">
+        <div class="section-icon">🐾</div>
+        <div><h2>8. Pests, pets &amp; animal-related issues</h2><div class="section-count">5 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="mosquitoes / insects entering under doors residents reported more mosquitoes, flies and insects entering villas. door seals were said to reduce ingress but not eliminate it because insects also enter when doors are opened. residents combined sealing with pest control.  resident advice / experience mosquitoes, door seals, insects" data-section="pests-pets-animal-related-issues">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Mosquitoes / insects entering under doors</span>
+          <span class="issue-preview">Residents reported more mosquitoes, flies and insects entering villas.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported more mosquitoes, flies and insects entering villas.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Door seals were said to reduce ingress but not eliminate it because insects also enter when doors are opened. Residents combined sealing with pest control.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="ant infestation residents who had not previously had ants reported sudden heavy infestations. suggestions included checking the garden for ant nests/hills and using professional pest control. one resident reported no further ants after treatment.  resident advice / experience ants, ant hill, pest control" data-section="pests-pets-animal-related-issues">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Ant infestation</span>
+          <span class="issue-preview">Residents who had not previously had ants reported sudden heavy infestations.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents who had not previously had ants reported sudden heavy infestations.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included checking the garden for ant nests/hills and using professional pest control. One resident reported no further ants after treatment.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="redback spiders residents in multiple phases reported possible redback spiders. practical advice included keeping garden areas uncluttered, allowing sunlight into dark nesting areas and keeping furniture roughly 20 cm away from walls. management pest control attended at least one property, and residents suggested requesting treatment across the wider community / municipality where multiple sightings occur.  resident advice / experience redback spider, pest control, garden" data-section="pests-pets-animal-related-issues">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Redback spiders</span>
+          <span class="issue-preview">Residents in multiple phases reported possible redback spiders.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents in multiple phases reported possible redback spiders.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Practical advice included keeping garden areas uncluttered, allowing sunlight into dark nesting areas and keeping furniture roughly 20 cm away from walls. Management pest control attended at least one property, and residents suggested requesting treatment across the wider community / municipality where multiple sightings occur.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="dog barking / nuisance a dog left outside barked for a prolonged period and disturbed neighbours. suggested escalation: speak to the neighbour first; if unresolved, contact security and then formal authorities/police if necessary. in the documented case, the owner explained an emergency and the immediate conflict was resolved through communication.  resident advice / experience dog barking, security, neighbour" data-section="pests-pets-animal-related-issues">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Dog barking / nuisance</span>
+          <span class="issue-preview">A dog left outside barked for a prolonged period and disturbed neighbours.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>A dog left outside barked for a prolonged period and disturbed neighbours.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested escalation: speak to the neighbour first; if unresolved, contact security and then formal authorities/police if necessary. In the documented case, the owner explained an emergency and the immediate conflict was resolved through communication.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="animal safety: glue traps and pellet/air guns residents raised two animal-welfare concerns: a cat caught in rat-glue adhesive and another cat reportedly injured by pellets. suggestions were to place pest-control traps where pets/strays cannot access them and to report suspected deliberate animal cruelty / unsafe weapon use to the appropriate authorities and security. residents also asked for cctv review.  resident advice / experience cat, glue trap, pellet, animal cruelty, cctv" data-section="pests-pets-animal-related-issues">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Animal safety: glue traps and pellet/air guns</span>
+          <span class="issue-preview">Residents raised two animal-welfare concerns: a cat caught in rat-glue adhesive and another cat reportedly injured by pellets…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents raised two animal-welfare concerns: a cat caught in rat-glue adhesive and another cat reportedly injured by pellets.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions were to place pest-control traps where pets/strays cannot access them and to report suspected deliberate animal cruelty / unsafe weapon use to the appropriate authorities and security. Residents also asked for CCTV review.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="roads-parking-scooters-community-safety" data-title="9. Roads, parking, scooters &amp; community safety">
+      <div class="section-title-row">
+        <div class="section-icon">🚗</div>
+        <div><h2>9. Roads, parking, scooters &amp; community safety</h2><div class="section-count">4 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="wrong-way driving / speeding residents repeatedly raised speeding and vehicles using one-way streets incorrectly. suggestions included clearer directional road markings, stronger security reporting and one-way / unidirectional speed-control measures. the owners committee said unidirectional speed bumps had been requested but refused at that stage, and alternative safety measures were being sought.  safety concern remains; some proposed measures not approved speeding, one-way, speed bumps, road markings" data-section="roads-parking-scooters-community-safety">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Wrong-way driving / speeding</span>
+          <span class="issue-preview">Residents repeatedly raised speeding and vehicles using one-way streets incorrectly.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents repeatedly raised speeding and vehicles using one-way streets incorrectly.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included clearer directional road markings, stronger security reporting and one-way / unidirectional speed-control measures. The owners committee said unidirectional speed bumps had been requested but refused at that stage, and alternative safety measures were being sought.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Safety concern remains; some proposed measures not approved</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="children on scooters/bikes blocking roads or ringing bells residents reported a recurring group riding in the road, blocking vehicles, ringing doorbells and entering private areas. suggested response: identify villas where possible, notify security, use cctv, log incidents to dscm and ask management to contact parents. residents also called for more suitable recreation space so children have safer places to play.  resident advice / experience scooters, bikes, children, doorbells, cctv" data-section="roads-parking-scooters-community-safety">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Children on scooters/bikes blocking roads or ringing bells</span>
+          <span class="issue-preview">Residents reported a recurring group riding in the road, blocking vehicles, ringing doorbells and entering private areas.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents reported a recurring group riding in the road, blocking vehicles, ringing doorbells and entering private areas.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested response: identify villas where possible, notify security, use CCTV, log incidents to DSCM and ask management to contact parents. Residents also called for more suitable recreation space so children have safer places to play.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="private / assigned parking misuse residents asked owners to move cars parked in another villa&#x27;s space or obstructively where other bays were available. community norm suggested: use unassigned spaces where available and ask permission before using a neighbour&#x27;s space.  resident advice / experience parking, villa bay, car" data-section="roads-parking-scooters-community-safety">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Private / assigned parking misuse</span>
+          <span class="issue-preview">Residents asked owners to move cars parked in another villa&#x27;s space or obstructively where other bays were available.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked owners to move cars parked in another villa&#x27;s space or obstructively where other bays were available.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Community norm suggested: use unassigned spaces where available and ask permission before using a neighbour&#x27;s space.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="need for better play / sports space some residents argued that nuisance behaviour partly reflects a lack of age-appropriate community space beyond toddler-oriented parks. suggestions included football, basketball/tennis and better open recreation areas, and reconsidering low-use spaces such as the lagoon/pond area for more useful amenities.  community improvement proposal playground, football, basketball, teenagers, park" data-section="roads-parking-scooters-community-safety">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Need for better play / sports space</span>
+          <span class="issue-preview">Some residents argued that nuisance behaviour partly reflects a lack of age-appropriate community space beyond toddler-orient…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Some residents argued that nuisance behaviour partly reflects a lack of age-appropriate community space beyond toddler-oriented parks.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included football, basketball/tennis and better open recreation areas, and reconsidering low-use spaces such as the lagoon/pond area for more useful amenities.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Community improvement proposal</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="facilities-parks-gym-pool-splash-park" data-title="10. Facilities, parks, gym, pool &amp; splash park">
+      <div class="section-title-row">
+        <div class="section-icon">🏊</div>
+        <div><h2>10. Facilities, parks, gym, pool &amp; splash park</h2><div class="section-count">5 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="pool cooler/heater performance the pool temperature / cooler-heater system was flagged as a problem. the owners committee reported escalating the issue through community management to the owners in july 2026.  escalated pool cooler, pool heater, pool temperature" data-section="facilities-parks-gym-pool-splash-park">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Pool cooler/heater performance</span>
+          <span class="issue-preview">The pool temperature / cooler-heater system was flagged as a problem.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>The pool temperature / cooler-heater system was flagged as a problem.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The owners committee reported escalating the issue through community management to the owners in July 2026.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Escalated</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="swimming coach / lessons residents asked whether external swimming coaches could teach at the community pool. one resident reported being told the south fitness club did not allow an outside coach because it has its own instructor. residents also shared a recommended coach contact for lessons.  resident advice / experience swimming coach, pool, south fitness club" data-section="facilities-parks-gym-pool-splash-park">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Swimming coach / lessons</span>
+          <span class="issue-preview">Residents asked whether external swimming coaches could teach at the community pool.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked whether external swimming coaches could teach at the community pool.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>One resident reported being told the South Fitness Club did not allow an outside coach because it has its own instructor. Residents also shared a recommended coach contact for lessons.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="gym and pool opening times residents repeatedly asked for current timings. the most recent timings shared in the source (8 sep 2026) were: gym mon–fri 6:00 am–11:00 pm; sat–sun 8:00 am–10:00 pm. pool daily 9:00 am–9:00 pm. always re-check with the facility in case hours have changed. resident advice / experience gym timings, pool timings" data-section="facilities-parks-gym-pool-splash-park">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Gym and pool opening times</span>
+          <span class="issue-preview">Residents repeatedly asked for current timings.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents repeatedly asked for current timings.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The most recent timings shared in the source (8 Sep 2026) were: Gym Mon–Fri 6:00 AM–11:00 PM; Sat–Sun 8:00 AM–10:00 PM. Pool daily 9:00 AM–9:00 PM.</p></div>
+        <div class="note"><strong>Note:</strong> Always re-check with the facility in case hours have changed.</div>
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="splash park access / payment / condition residents asked how to pay for the splash park and complained that parts were not working and surfaces could feel slimy. payment advice shared: use the qr code on the gate. residents proposed better maintenance and a clearer resident-access model.  resident advice / experience splash park, qr code, maintenance" data-section="facilities-parks-gym-pool-splash-park">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Splash park access / payment / condition</span>
+          <span class="issue-preview">Residents asked how to pay for the splash park and complained that parts were not working and surfaces could feel slimy.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents asked how to pay for the splash park and complained that parts were not working and surfaces could feel slimy.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Payment advice shared: use the QR code on the gate. Residents proposed better maintenance and a clearer resident-access model.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="resident vs public use of paid-for facilities residents were concerned that community-funded facilities could be heavily used by people from outside dubai south / the immediate community. ideas raised: resident card access; a frequently changing resident promo code; full public pricing for non-residents; or removing facilities from service-charge funding and operating them on a pay-as-you-use basis.  community proposals; not confirmed policy resident access, promo code, playo, service fee" data-section="facilities-parks-gym-pool-splash-park">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Resident vs public use of paid-for facilities</span>
+          <span class="issue-preview">Residents were concerned that community-funded facilities could be heavily used by people from outside Dubai South / the imme…</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents were concerned that community-funded facilities could be heavily used by people from outside Dubai South / the immediate community.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Ideas raised: resident card access; a frequently changing resident promo code; full public pricing for non-residents; or removing facilities from service-charge funding and operating them on a pay-as-you-use basis.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Community proposals; not confirmed policy</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="community-budget-events-service-charge-ideas" data-title="11. Community budget, events &amp; service-charge ideas">
+      <div class="section-title-row">
+        <div class="section-icon">🎉</div>
+        <div><h2>11. Community budget, events &amp; service-charge ideas</h2><div class="section-count">4 topics</div></div>
+      </div>
+      
+    <article class="issue-card" data-search="smaller events vs one larger community day with a limited events budget, residents debated multiple smaller festive events versus one larger community day. ideas included family/kids activities, lawn sports and bouncy castles, with a larger event held in cooler months. some preferred multiple culturally inclusive events such as ramadan/eid, diwali, holi, christmas and easter.  resident advice / experience community event, budget, festival, community day" data-section="community-budget-events-service-charge-ideas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Smaller events vs one larger community day</span>
+          <span class="issue-preview">With a limited events budget, residents debated multiple smaller festive events versus one larger community day.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>With a limited events budget, residents debated multiple smaller festive events versus one larger community day.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Ideas included family/kids activities, lawn sports and bouncy castles, with a larger event held in cooler months. Some preferred multiple culturally inclusive events such as Ramadan/Eid, Diwali, Holi, Christmas and Easter.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="reduce catering cost by using food vendors residents said catering can consume a large share of event budgets. suggested model: invite food stalls / food trucks to sell directly, potentially charging vendors for space/power rather than using community funds to provide all food.  resident advice / experience food stalls, food trucks, event cost" data-section="community-budget-events-service-charge-ideas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Reduce catering cost by using food vendors</span>
+          <span class="issue-preview">Residents said catering can consume a large share of event budgets.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents said catering can consume a large share of event budgets.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggested model: invite food stalls / food trucks to sell directly, potentially charging vendors for space/power rather than using community funds to provide all food.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident advice / experience</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="should service-charge funds pay for events / public facilities? residents questioned whether service-charge money should fund social events or facilities available to non-residents. suggestions included prioritising internal upkeep, landscaping, benches and signage; charging for events; making facilities resident-focused; or operating some amenities separately on usage fees.  resident views / proposals only service charge, events, benches, signage, facilities" data-section="community-budget-events-service-charge-ideas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Should service-charge funds pay for events / public facilities?</span>
+          <span class="issue-preview">Residents questioned whether service-charge money should fund social events or facilities available to non-residents.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents questioned whether service-charge money should fund social events or facilities available to non-residents.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>Suggestions included prioritising internal upkeep, landscaping, benches and signage; charging for events; making facilities resident-focused; or operating some amenities separately on usage fees.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Resident views / proposals only</div>
+      </div>
+    </article>
+    
+    <article class="issue-card" data-search="can unused event funds be repurposed or rolled over? residents challenged the idea that an approved budget must be spent or lost. the committee response in the chat was that approved rera/mollak budgets may be difficult to repurpose once approved, but management could be asked whether unused funds can roll into the following year or be redirected if community consensus supports it.  needs formal management / rera-mollak confirmation budget roll-over, rera, mollak, repurpose" data-section="community-budget-events-service-charge-ideas">
+      <button class="issue-head" type="button" aria-expanded="false">
+        <span class="issue-main">
+          <span class="issue-name">Can unused event funds be repurposed or rolled over?</span>
+          <span class="issue-preview">Residents challenged the idea that an approved budget must be spent or lost.</span>
+        </span>
+        <span class="chev">›</span>
+      </button>
+      <div class="issue-body">
+        <div class="block"><span class="label">Question / issue</span><p>Residents challenged the idea that an approved budget must be spent or lost.</p></div>
+        <div class="block solution"><span class="label">Suggested solution</span><p>The committee response in the chat was that approved RERA/Mollak budgets may be difficult to repurpose once approved, but management could be asked whether unused funds can roll into the following year or be redirected if community consensus supports it.</p></div>
+        
+        
+        <div class="meta"><strong>Status:</strong> Needs formal management / RERA-Mollak confirmation</div>
+      </div>
+    </article>
+    
+    </section>
+    
+    <section class="screen-section" id="deliveries-lost-property-neighbour-to-neighbour-help" data-title="12. Deliveries, lost property &amp; neighbour-to-neighbour help">
+      <div class="section-title-row">
+        <div class="section-icon">📦</div>
+        <div><h2>12. Deliveries, lost property &amp; neighbour-to-neighbour help</h2><div class="section-count">0 topics</div></div>
+      </div>
+      <p class='section-intro'>A significant share of the group is practical mutual help. The recurring patterns are useful enough to preserve as community norms:</p><div class='tipline'>• Misdelivered Amazon/Noon/water/flower packages: post the intended name/villa (without sharing unnecessary personal data) and arrange collection.</div><div class='tipline'>• Lost sports items (balls, golf clubs, bags): check the park/court first, then security/lost property, then post in the group.</div><div class='tipline'>• Borrowing short-use items: residents regularly lend jumper cables, sports equipment, burners, office chairs and baby items.</div><div class='tipline'>• Moving / cleaning emergencies: residents often recommend app-based services such as Justlife when available, but access/permit requirements should be checked first.</div><div class='tipline'>• Unwanted bulky items: 800JUNK was suggested for collection; residents also offer reusable items to neighbours before disposal.</div>
+    </section>
+    
+    <section class="screen-section" id="useful-local-tips-quick-answers" data-title="13. Useful local tips &amp; quick answers">
+      <div class="section-title-row">
+        <div class="section-icon">📍</div>
+        <div><h2>13. Useful local tips &amp; quick answers</h2><div class="section-count">0 topics</div></div>
+      </div>
+      <div class='mini-card'><strong>Airport assistance for an elderly/injured traveller</strong><div>Residents suggested booking Marhaba assistance and requesting a wheelchair through the airline so the passenger can be supported through the airport.</div></div><div class='mini-card'><strong>Nearby medical care</strong><div>NMC in DIP, Mediclinic Parkview and Al Noor South Polyclinic were suggested for various minor/primary-care needs.</div></div><div class='mini-card'><strong>ATM / cash deposit</strong><div>An Emirates NBD CDM was reported as being installed at the ENOC petrol station behind Zoom; residents also confirmed an ATM at Lulu.</div></div><div class='mini-card'><strong>Splash park payment</strong><div>A QR code on the gate was shared as the payment method.</div></div><div class='mini-card'><strong>Gym timings (latest shared)</strong><div>Mon–Fri 6:00 AM–11:00 PM; Sat–Sun 8:00 AM–10:00 PM.</div></div><div class='mini-card'><strong>Pool timings (latest shared)</strong><div>Daily 9:00 AM–9:00 PM.</div></div><div class='mini-card'><strong>Construction / loud nuisance</strong><div>Residents suggested documenting repeated disturbances and escalating to DSCM; weekend construction was specifically raised as a complaint item.</div></div><div class='mini-card'><strong>Road disruption</strong><div>Residents share live route alternatives in the group; for major congestion, check official traffic/navigation services before setting off.</div></div>
+    </section>
+    
+    <section class="screen-section" id="open-unresolved-community-actions" data-title="15. Open / unresolved community actions">
+      <div class="section-title-row">
+        <div class="section-icon">⚠️</div>
+        <div><h2>15. Open / unresolved community actions</h2><div class="section-count">0 topics</div></div>
+      </div>
+      <p class='section-intro'>The following topics recur in the chat without a clearly documented permanent resolution:</p><p class='section-intro'>Appendix: suggested community posting format</p><p class='section-intro'>To make future WhatsApp advice easier to add to this guide, residents could use a simple format:</p><div class='tipline'>• ISSUE: short description</div><div class='tipline'>• PHASE / AREA: only if relevant</div><div class='tipline'>• WHAT I TRIED: steps already taken</div><div class='tipline'>• SOLUTION THAT WORKED: if resolved</div><div class='tipline'>• PROVIDER: business name + business number (avoid publishing personal resident numbers)</div><div class='tipline'>• COST / DATE: optional, so others know how old the price is</div><div class='tipline'>• PERMIT NEEDED?: yes / no / not sure</div><div class='tipline'>• STATUS: resolved / temporary fix / still open</div><p class='section-intro'>Important: For safety, health, legal, emergency, utility or regulatory matters, always check current official guidance. WhatsApp advice can be useful, but it can also be incomplete or outdated.</p><div class='mini-card'><strong>Mobile signal coverage</strong><div>Coordinate e&amp;/Etisalat and du fault reports; ask DSCM/Dubai South to support a formal coverage/cell-site request. — Residents / management / operators</div></div><div class='mini-card'><strong>Foul outdoor odour</strong><div>Continue coordinated official complaints and request measurement/source confirmation rather than relying on hypotheses. — Residents / Municipality / environmental authorities</div></div><div class='mini-card'><strong>Road safety</strong><div>Revisit one-way enforcement, road markings and physical speed-control alternatives after the earlier speed-bump proposal was refused. — Owners committee / management</div></div><div class='mini-card'><strong>Side-gate access</strong><div>Clarify whether non-essential side gates can be closed or access-controlled so non-residents use the main gate. — Owners committee / security / management</div></div><div class='mini-card'><strong>Soundproofing external modifications</strong><div>Seek a consistent approval standard for visually matched frame/glazing upgrades that reduce road noise. — Owners / DSCM</div></div><div class='mini-card'><strong>Water pump design</strong><div>Share a standard technical note comparing original system maintenance, blue-tank replacement and full constant-pressure upgrades. — Owners committee / maintenance</div></div><div class='mini-card'><strong>Pool / splash facility maintenance</strong><div>Track cooler/heater, cleanliness and broken splash-park components and publish closure/reopening updates. — Facility operator / management</div></div><div class='mini-card'><strong>Resident-only facility benefits</strong><div>Evaluate resident ID/card/promo code or differentiated pricing before the next budget cycle. — Management / owners committee</div></div><div class='mini-card'><strong>Community event funding</strong><div>Confirm formally whether unused event budget can roll over or be repurposed under RERA/Mollak-approved budgets. — Owners committee / DSCM</div></div><div class='mini-card'><strong>Community amenities</strong><div>Prioritise a resident wish-list: benches, signage, improved internal landscaping and more age-appropriate sports/play space. — Owners / management</div></div>
+    </section>
+    </main>
+  </div>
+
+  <section id="providerView" class="provider-screen">
+    <div class="section-title-row">
+      <div class="section-icon">🛠️</div>
+      <div><h2>Recommended providers</h2><div class="section-count">39 contacts from the community guide</div></div>
+    </div>
+    
+    <article class="provider-card" data-search="community / maintenance pulse helpdesk urgent +971 800 3873783 / +971 4 815 5641 shared as a number that &#x27;always works&#x27; for urgent maintenance.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Community / maintenance</span><h3>Pulse helpdesk urgent</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+9718003873783">+971 800 3873783 </a>/ <a href="tel:+97148155641">+971 4 815 5641</a></div>
+      <p>Shared as a number that &#x27;always works&#x27; for urgent maintenance.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+9718003873783">📞 Call</a><a class="small-action secondary" href="https://wa.me/9718003873783" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="community / maintenance duserve / abdul +971 52 113 8692 shared repeatedly for water, maintenance and electrical/plumbing escalation.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Community / maintenance</span><h3>Duserve / Abdul</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971521138692">+971 52 113 8692</a></div>
+      <p>Shared repeatedly for water, maintenance and electrical/plumbing escalation.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971521138692">📞 Call</a><a class="small-action secondary" href="https://wa.me/971521138692" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="community / maintenance abdul hannan – duserve water pump +971 54 438 1607 shared for pump / maintenance work.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Community / maintenance</span><h3>Abdul Hannan – Duserve water pump</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971544381607">+971 54 438 1607</a></div>
+      <p>Shared for pump / maintenance work.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971544381607">📞 Call</a><a class="small-action secondary" href="https://wa.me/971544381607" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="community / maintenance asghar – duserve pulse +971 54 221 3033 shared alongside pump/fuse support.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Community / maintenance</span><h3>Asghar – Duserve Pulse</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971542213033">+971 54 221 3033</a></div>
+      <p>Shared alongside pump/fuse support.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971542213033">📞 Call</a><a class="small-action secondary" href="https://wa.me/971542213033" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="security pulse security / rahuman +971 52 399 5826 shared as 24x7 / pulse security contact.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Security</span><h3>Pulse security / Rahuman</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971523995826">+971 52 399 5826</a></div>
+      <p>Shared as 24x7 / Pulse security contact.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971523995826">📞 Call</a><a class="small-action secondary" href="https://wa.me/971523995826" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="security david – pulse security +971 56 207 1055 shared by residents as security contact.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Security</span><h3>David – Pulse Security</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971562071055">+971 56 207 1055</a></div>
+      <p>Shared by residents as security contact.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971562071055">📞 Call</a><a class="small-action secondary" href="https://wa.me/971562071055" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="gardening wisam gardener +971 56 624 0677 resident said they tried several gardeners and were happy after finding wisam.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Gardening</span><h3>Wisam Gardener</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971566240677">+971 56 624 0677</a></div>
+      <p>Resident said they tried several gardeners and were happy after finding Wisam.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971566240677">📞 Call</a><a class="small-action secondary" href="https://wa.me/971566240677" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="gardening yousef / yousif gardener +971 50 301 4038 repeatedly shared; described as polite and looking after everything.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Gardening</span><h3>Yousef / Yousif Gardener</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971503014038">+971 50 301 4038</a></div>
+      <p>Repeatedly shared; described as polite and looking after everything.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971503014038">📞 Call</a><a class="small-action secondary" href="https://wa.me/971503014038" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="gardening waseem gardener +971 54 599 5642 shared as an alternative gardener.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Gardening</span><h3>Waseem Gardener</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971545995642">+971 54 599 5642</a></div>
+      <p>Shared as an alternative gardener.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971545995642">📞 Call</a><a class="small-action secondary" href="https://wa.me/971545995642" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="landscaping unique garden landscape +971 55 515 2977 shared as a landscaping contact.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Landscaping</span><h3>Unique Garden Landscape</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971555152977">+971 55 515 2977</a></div>
+      <p>Shared as a landscaping contact.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971555152977">📞 Call</a><a class="small-action secondary" href="https://wa.me/971555152977" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="cleaning first cleaning services +971 52 252 3500 shared more than once as a cleaning provider.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Cleaning</span><h3>First Cleaning Services</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971522523500">+971 52 252 3500</a></div>
+      <p>Shared more than once as a cleaning provider.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971522523500">📞 Call</a><a class="small-action secondary" href="https://wa.me/971522523500" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="painting manu patel / manu contractor painter +971 58 242 7286 repeatedly shared for painting / wallpaper-related work.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Painting</span><h3>Manu Patel / Manu Contractor Painter</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971582427286">+971 58 242 7286</a></div>
+      <p>Repeatedly shared for painting / wallpaper-related work.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971582427286">📞 Call</a><a class="small-action secondary" href="https://wa.me/971582427286" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="ac / hvac ibrahim +971 50 225 5274 recommended as &#x27;really good with ac jobs&#x27;.">
+      <div class="provider-top">
+        <div><span class="provider-cat">AC / HVAC</span><h3>Ibrahim</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971502255274">+971 50 225 5274</a></div>
+      <p>Recommended as &#x27;really good with AC jobs&#x27;.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971502255274">📞 Call</a><a class="small-action secondary" href="https://wa.me/971502255274" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="ac duct cleaning ayham ac duct cleaner +971 50 420 0275 shared for duct cleaning; resident cited approx. aed 250/unit at the time.">
+      <div class="provider-top">
+        <div><span class="provider-cat">AC duct cleaning</span><h3>Ayham AC Duct Cleaner</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971504200275">+971 50 420 0275</a></div>
+      <p>Shared for duct cleaning; resident cited approx. AED 250/unit at the time.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971504200275">📞 Call</a><a class="small-action secondary" href="https://wa.me/971504200275" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="ac cleaning pro clean contact not captured in text export described by a resident as &#x27;super professional&#x27; and worth the money.">
+      <div class="provider-top">
+        <div><span class="provider-cat">AC cleaning</span><h3>Pro Clean</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact">Contact not captured in text export</div>
+      <p>Described by a resident as &#x27;super professional&#x27; and worth the money.</p>
+      <div class="provider-actions"></div>
+    </article>
+    
+    <article class="provider-card" data-search="thermostats bilal – just care / google thermostat +971 52 535 2827 shared for google nest/ecobee and other thermostat installation.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Thermostats</span><h3>Bilal – Just Care / Google Thermostat</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971525352827">+971 52 535 2827</a></div>
+      <p>Shared for Google Nest/Ecobee and other thermostat installation.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971525352827">📞 Call</a><a class="small-action secondary" href="https://wa.me/971525352827" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="water pumps water pump people / mohammed +971 50 155 9272 jebel ali supplier contact shared after residents replaced pumps.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Water pumps</span><h3>Water Pump People / Mohammed</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971501559272">+971 50 155 9272</a></div>
+      <p>Jebel Ali supplier contact shared after residents replaced pumps.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971501559272">📞 Call</a><a class="small-action secondary" href="https://wa.me/971501559272" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="pest control eagle nest pest services +971 54 705 6684 shared after a resident reported successful ant treatment.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Pest control</span><h3>Eagle Nest Pest Services</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971547056684">+971 54 705 6684</a></div>
+      <p>Shared after a resident reported successful ant treatment.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971547056684">📞 Call</a><a class="small-action secondary" href="https://wa.me/971547056684" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="pest control naveed khan – urban company +971 50 733 6400 shared for pest control; resident said they had used him for nearly two years without issue.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Pest control</span><h3>Naveed Khan – Urban Company</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971507336400">+971 50 733 6400</a></div>
+      <p>Shared for pest control; resident said they had used him for nearly two years without issue.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971507336400">📞 Call</a><a class="small-action secondary" href="https://wa.me/971507336400" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="pest control akkad pest control +971 50 400 1344 shared by a resident who said they use them regularly.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Pest control</span><h3>Akkad Pest Control</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971504001344">+971 50 400 1344</a></div>
+      <p>Shared by a resident who said they use them regularly.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971504001344">📞 Call</a><a class="small-action secondary" href="https://wa.me/971504001344" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="moving m.a. movers packers +971 56 112 9995 very strongly recommended by a resident after a full move.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Moving</span><h3>M.A. Movers Packers</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971561129995">+971 56 112 9995</a></div>
+      <p>Very strongly recommended by a resident after a full move.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971561129995">📞 Call</a><a class="small-action secondary" href="https://wa.me/971561129995" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="moving on the move onthemove.ae multiple residents called them excellent / highly recommended.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Moving</span><h3>On The Move</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="https://onthemove.ae" target="_blank" rel="noopener">onthemove.ae</a></div>
+      <p>Multiple residents called them excellent / highly recommended.</p>
+      <div class="provider-actions"></div>
+    </article>
+    
+    <article class="provider-card" data-search="moving emovers emoversuae.com resident described them as professional with end-to-end services.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Moving</span><h3>Emovers</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="https://emoversuae.com" target="_blank" rel="noopener">emoversuae.com</a></div>
+      <p>Resident described them as professional with end-to-end services.</p>
+      <div class="provider-actions"></div>
+    </article>
+    
+    <article class="provider-card" data-search="appliances bosch appliances maintenance +971 56 995 2153 shared for bosch fridge / washing-machine issues.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Appliances</span><h3>Bosch Appliances Maintenance</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971569952153">+971 56 995 2153</a></div>
+      <p>Shared for Bosch fridge / washing-machine issues.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971569952153">📞 Call</a><a class="small-action secondary" href="https://wa.me/971569952153" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="home maintenance fixperts +971 56 501 9605 shared after a resident found appliance repair quotes from another provider excessive.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Home maintenance</span><h3>Fixperts</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971565019605">+971 56 501 9605</a></div>
+      <p>Shared after a resident found appliance repair quotes from another provider excessive.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971565019605">📞 Call</a><a class="small-action secondary" href="https://wa.me/971565019605" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="home maintenance fixoo nova building maintenance +971 50 800 1238 shared as a home-maintenance contact.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Home maintenance</span><h3>Fixoo Nova Building Maintenance</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971508001238">+971 50 800 1238</a></div>
+      <p>Shared as a home-maintenance contact.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971508001238">📞 Call</a><a class="small-action secondary" href="https://wa.me/971508001238" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="outdoor shade the shading company +971 58 581 2538 shared for sunshade work; residents warned to ensure proper fixing methods due to wall quality.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Outdoor shade</span><h3>The Shading Company</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971585812538">+971 58 581 2538</a></div>
+      <p>Shared for sunshade work; residents warned to ensure proper fixing methods due to wall quality.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971585812538">📞 Call</a><a class="small-action secondary" href="https://wa.me/971585812538" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="car wash mujahid – pulse villas +971 56 245 0543 resident reported aed 100/month at the time for regular washes.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Car wash</span><h3>Mujahid – Pulse Villas</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971562450543">+971 56 245 0543</a></div>
+      <p>Resident reported AED 100/month at the time for regular washes.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971562450543">📞 Call</a><a class="small-action secondary" href="https://wa.me/971562450543" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="tyres sand dance tyres +971 54 482 4537 shared and described as professional.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Tyres</span><h3>Sand Dance Tyres</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971544824537">+971 54 482 4537</a></div>
+      <p>Shared and described as professional.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971544824537">📞 Call</a><a class="small-action secondary" href="https://wa.me/971544824537" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="tyres alsaeedi / tyre repair dip +971 52 903 3017 shared for tyre work in dip.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Tyres</span><h3>Alsaeedi / Tyre Repair DIP</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971529033017">+971 52 903 3017</a></div>
+      <p>Shared for tyre work in DIP.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971529033017">📞 Call</a><a class="small-action secondary" href="https://wa.me/971529033017" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="vehicle workshop joseph touma – falcons garage +971 50 644 1710 shared for prado corrosion inspection/paint query.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Vehicle workshop</span><h3>Joseph Touma – Falcons Garage</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971506441710">+971 50 644 1710</a></div>
+      <p>Shared for Prado corrosion inspection/paint query.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971506441710">📞 Call</a><a class="small-action secondary" href="https://wa.me/971506441710" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="vet vetcare veterinary clinic +971 4 430 9797 resident strongly recommended dr anastas / clinic.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Vet</span><h3>VetCare Veterinary Clinic</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+97144309797">+971 4 430 9797</a></div>
+      <p>Resident strongly recommended Dr Anastas / clinic.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+97144309797">📞 Call</a><a class="small-action secondary" href="https://wa.me/97144309797" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="medical al noor south polyclinic +971 4 575 9111 shared as a local dubai south clinic.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Medical</span><h3>Al Noor South Polyclinic</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+97145759111">+971 4 575 9111</a></div>
+      <p>Shared as a local Dubai South clinic.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+97145759111">📞 Call</a><a class="small-action secondary" href="https://wa.me/97145759111" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="dentist chris joy dental clinic +971 58 685 2240 shared for dental / extraction query.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Dentist</span><h3>Chris Joy Dental Clinic</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971586852240">+971 58 685 2240</a></div>
+      <p>Shared for dental / extraction query.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971586852240">📞 Call</a><a class="small-action secondary" href="https://wa.me/971586852240" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="cook jokhu cook +971 55 154 5123 shared multiple times for indian/nepali/sri lankan cooking.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Cook</span><h3>Jokhu Cook</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971551545123">+971 55 154 5123</a></div>
+      <p>Shared multiple times for Indian/Nepali/Sri Lankan cooking.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971551545123">📞 Call</a><a class="small-action secondary" href="https://wa.me/971551545123" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="swimming magic – swimming coach +971 56 809 1216 recommended by a resident as a friendly coach.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Swimming</span><h3>Magic – Swimming Coach</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971568091216">+971 56 809 1216</a></div>
+      <p>Recommended by a resident as a friendly coach.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971568091216">📞 Call</a><a class="small-action secondary" href="https://wa.me/971568091216" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="waste removal 800junk 800junk suggested for large unwanted-item collection.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Waste removal</span><h3>800JUNK</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact">800JUNK</div>
+      <p>Suggested for large unwanted-item collection.</p>
+      <div class="provider-actions"></div>
+    </article>
+    
+    <article class="provider-card" data-search="supermarket talal / tilal dubai south +971 56 991 0051 whatsapp contact shared by residents.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Supermarket</span><h3>Talal / Tilal Dubai South</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971569910051">+971 56 991 0051</a></div>
+      <p>WhatsApp contact shared by residents.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971569910051">📞 Call</a><a class="small-action secondary" href="https://wa.me/971569910051" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+    <article class="provider-card" data-search="carpentry / wood irfan wood +971 56 150 2025 shared for floating tv unit / wooden panel work.">
+      <div class="provider-top">
+        <div><span class="provider-cat">Carpentry / wood</span><h3>Irfan Wood</h3></div>
+        <span class="provider-icon">🛠️</span>
+      </div>
+      <div class="contact"><a href="tel:+971561502025">+971 56 150 2025</a></div>
+      <p>Shared for floating TV unit / wooden panel work.</p>
+      <div class="provider-actions"><a class="small-action" href="tel:+971561502025">📞 Call</a><a class="small-action secondary" href="https://wa.me/971561502025" target="_blank" rel="noopener">💬 WhatsApp</a></div>
+    </article>
+    
+  </section>
+
+  <button class="fab" id="toTop" aria-label="Back to top">↑</button>
+
+  <nav class="bottomnav">
+    <button class="navbtn active" data-view="home"><span class="ico">⌂</span><span>Home</span></button>
+    <button class="navbtn" data-view="issues"><span class="ico">☰</span><span>Issues</span></button>
+    <button class="navbtn" data-view="providers"><span class="ico">🛠️</span><span>Providers</span></button>
+    <button class="navbtn" data-view="search"><span class="ico">⌕</span><span>Search</span></button>
+  </nav>
+</div>
+
+<script>
+const search=document.getElementById('search');
+const clear=document.getElementById('clearSearch');
+const issueCards=[...document.querySelectorAll('.issue-card')];
+const providerCards=[...document.querySelectorAll('.provider-card')];
+const sections=[...document.querySelectorAll('.screen-section')];
+const homeView=document.getElementById('homeView');
+const providerView=document.getElementById('providerView');
+const navBtns=[...document.querySelectorAll('.navbtn')];
+const searchSummary=document.getElementById('searchSummary');
+const noResults=document.getElementById('noResults');
+const toTop=document.getElementById('toTop');
+
+function norm(s){return (s||'').toLowerCase().replace(/\s+/g,' ').trim()}
+function setActive(v){navBtns.forEach(b=>b.classList.toggle('active',b.dataset.view===v))}
+
+function showView(v){
+  if(v==='providers'){
+    homeView.style.display='none';
+    providerView.classList.add('active');
+    setActive('providers');
+    window.scrollTo(0,0);
+  } else {
+    providerView.classList.remove('active');
+    homeView.style.display='block';
+    setActive(v==='search'?'search':v==='issues'?'issues':'home');
+    if(v==='issues') document.querySelector('.content')?.scrollIntoView({behavior:'smooth'});
+    if(v==='search') search.focus();
+  }
+}
+
+function openSection(id){
+  showView('issues');
+  setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'}),60);
+}
+
+document.addEventListener('click',e=>{
+  const head=e.target.closest('.issue-head');
+  if(head){
+    const card=head.closest('.issue-card');
+    card.classList.toggle('open');
+    head.setAttribute('aria-expanded',card.classList.contains('open')?'true':'false');
+    return;
+  }
+  const go=e.target.closest('[data-go]');
+  if(go){openSection(go.dataset.go);return;}
+  const view=e.target.closest('[data-view]');
+  if(view){showView(view.dataset.view);return;}
+});
+
+function applySearch(){
+  const q=norm(search.value);
+  clear.style.display=q?'block':'none';
+  let issues=0, providers=0;
+
+  issueCards.forEach(c=>{
+    const ok=!q||norm(c.dataset.search+' '+c.innerText).includes(q);
+    c.style.display=ok?'':'none';
+    c.classList.toggle('match',!!q&&ok);
+    if(ok){issues++; if(q)c.classList.add('open')}
+  });
+
+  sections.forEach(s=>{
+    const visible=[...s.querySelectorAll('.issue-card')].some(c=>c.style.display!=='none');
+    const staticMatch=!q||norm(s.innerText).includes(q);
+    s.style.display=(!q||visible||staticMatch)?'':'none';
+  });
+
+  providerCards.forEach(c=>{
+    const ok=!q||norm(c.dataset.search+' '+c.innerText).includes(q);
+    c.style.display=ok?'':'none';
+    c.classList.toggle('match',!!q&&ok);
+    if(ok)providers++;
+  });
+
+  if(q){
+    searchSummary.classList.add('active');
+    searchSummary.textContent=`${issues} issue match${issues===1?'':'es'} • ${providers} provider match${providers===1?'':'es'}`;
+    noResults.style.display=(issues===0&&providers===0)?'block':'none';
+  } else {
+    searchSummary.classList.remove('active');
+    noResults.style.display='none';
+  }
+}
+
+search.addEventListener('input',applySearch);
+clear.addEventListener('click',()=>{search.value='';applySearch();search.focus()});
+document.getElementById('jumpSelect').addEventListener('change',e=>{if(e.target.value)openSection(e.target.value)});
+
+window.addEventListener('scroll',()=>{toTop.style.display=window.scrollY>500?'block':'none'});
+toTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
